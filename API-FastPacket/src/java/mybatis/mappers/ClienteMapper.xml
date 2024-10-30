@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="clientes">
+    
+
+    <select id="obtenerLista" resultType="pojo.Cliente">
+        SELECT idCliente, nombre, apellidoPaterno, apellidoMaterno,
+        correo, telefono, idDireccion
+        FROM cliente
+    </select>
+    
+    <select id="obtenerDatosCliente" resultType="pojo.DatosRegistroCliente">
+        SELECT 
+            c.idCliente,
+            c.nombre,
+            c.apellidoPaterno,
+            c.apellidoMaterno,
+            c.telefono,
+            c.correo,
+            d.idDireccion,
+            d.calle,
+            d.numero,
+            d.colonia,
+            d.codigoPostal,
+            d.ciudad,
+            d.estado
+        FROM 
+            cliente c
+        JOIN 
+            direccion d ON c.idDireccion = d.idDireccion
+        WHERE c.idCliente = #{idCliente}
+    </select>
+    
+
+
+</mapper>
