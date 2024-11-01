@@ -34,6 +34,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE c.idCliente = #{idCliente}
     </select>
     
+    <insert id="registrar" parameterType="pojo.DatosRegistroCliente" statementType="CALLABLE">
+        {CALL registrarCliente(
+        #{cliente.nombre, mode=IN, jdbcType=VARCHAR},
+        #{cliente.apellidoPaterno, mode=IN, jdbcType=VARCHAR},
+        #{cliente.apellidoMaterno, mode=IN, jdbcType=VARCHAR},
+        #{cliente.telefono, mode=IN, jdbcType=VARCHAR},
+        #{cliente.correo, mode=IN, jdbcType=VARCHAR},
+        
+
+        #{direccion.calle, mode=IN, jdbcType=VARCHAR},
+        #{direccion.numero, mode=IN, jdbcType=INTEGER},
+        #{direccion.colonia, mode=IN, jdbcType=VARCHAR},
+        #{direccion.codigoPostal, mode=IN, jdbcType=VARCHAR},
+        #{direccion.ciudad, mode=IN, jdbcType=VARCHAR},
+        #{direccion.estado, mode=IN, jdbcType=VARCHAR},
+
+        #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
+        #{error, mode=INOUT, jdbcType=VARCHAR}
+    )}
+    </insert>
+    
 
 
 </mapper>
