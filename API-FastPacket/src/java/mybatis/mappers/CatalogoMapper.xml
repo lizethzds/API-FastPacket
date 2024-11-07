@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="catalogo">
+    
+
+    <select id="obtenerEstados" resultType="pojo.Estado">
+        SELECT idEstado, nombreEstado
+        FROM estado
+    </select>
+    
+    <select id="obtenerMunicipiosEstado" parameterType="int" resultType="pojo.Municipio">
+        SELECT idMunicipio, nombreMunicipio, idEstado
+        FROM municipio
+        WHERE idEstado = #{idEstado}
+    </select>
+    
+
+
+</mapper>
