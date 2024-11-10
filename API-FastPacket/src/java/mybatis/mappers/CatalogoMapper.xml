@@ -17,6 +17,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE idEstado = #{idEstado}
     </select>
     
+    <select id="obtenerEstadoMunicipio" parameterType="int" resultType="pojo.Estado">
+    SELECT e.*
+        FROM Estado e
+        JOIN Municipio m ON e.idEstado = m.idEstado
+        WHERE m.idMunicipio = #{idMunicipio}
+    </select>
+    
 
 
 </mapper>

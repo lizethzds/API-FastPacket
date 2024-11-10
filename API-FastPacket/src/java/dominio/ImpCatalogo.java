@@ -28,4 +28,11 @@ public class ImpCatalogo {
         return municipios;
     }
     
+    public static Estado obtenerEstadoPorMunicipio(Integer idMunicipio){
+        Estado estado = new Estado();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        estado = conexionBD.selectOne("catalogo.obtenerEstadoMunicipio", idMunicipio);
+        return estado;
+    }
+    
 }

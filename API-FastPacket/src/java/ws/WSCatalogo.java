@@ -42,6 +42,13 @@ public class WSCatalogo {
         return ImpCatalogo.obtenerMunicipiosEstado(idEstado);
     }
     
+    @Path("obtenerEstadoMunicipio/{idMunicipio}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Estado obtenerEstadoMunicipio(@PathParam("idMunicipio") Integer idMunicipio){
+        return ImpCatalogo.obtenerEstadoPorMunicipio(idMunicipio);
+    }
+    
     
     
 }
