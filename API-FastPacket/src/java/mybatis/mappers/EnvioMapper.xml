@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="envios">
+    
+
+  
+    
+ <insert id="registrarEnvio" parameterType="pojo.DatosRegistroEnvio" statementType="CALLABLE">
+    {CALL registrarEnvio(
+        #{envio.costoEnvio, mode=IN, jdbcType=FLOAT},
+        #{envio.idCliente, mode=IN, jdbcType=INTEGER},
+        #{envio.idEstadoEnvio, mode=IN, jdbcType=INTEGER},
+        #{envio.idColaborador, mode=IN, jdbcType=INTEGER},
+        
+        #{direccion.calle, mode=IN, jdbcType=VARCHAR},
+        #{direccion.numero, mode=IN, jdbcType=INTEGER},
+        #{direccion.colonia, mode=IN, jdbcType=VARCHAR},
+        #{direccion.codigoPostal, mode=IN, jdbcType=VARCHAR},
+        #{direccion.idMunicipio, mode=IN, jdbcType=INTEGER},
+
+        #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
+        #{mensaje, mode=INOUT, jdbcType=VARCHAR}
+    )}
+</insert>
+
+
+<update id="editarEnvio" parameterType="pojo.DatosRegistroEnvio" statementType="CALLABLE">
+    {CALL editarEnvio(
+    
+        #{envio.idEnvio, mode=IN, jdbcType=INTEGER},
+        #{envio.costoEnvio, mode=IN, jdbcType=FLOAT},
+        #{envio.idCliente, mode=IN, jdbcType=INTEGER},
+        #{envio.idEstadoEnvio, mode=IN, jdbcType=INTEGER},
+        #{envio.idColaborador, mode=IN, jdbcType=INTEGER},
+        
+        #{direccion.calle, mode=IN, jdbcType=VARCHAR},
+        #{direccion.numero, mode=IN, jdbcType=INTEGER},
+        #{direccion.colonia, mode=IN, jdbcType=VARCHAR},
+        #{direccion.codigoPostal, mode=IN, jdbcType=VARCHAR},
+        #{direccion.idMunicipio, mode=IN, jdbcType=INTEGER},
+
+        #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
+        #{mensaje, mode=INOUT, jdbcType=VARCHAR}
+    )}
+    
+</update>
+
+<delete id="eliminarEnvio" parameterType="int">
+    DELETE FROM envio
+    WHERE idEnvio = #{idEnvio}
+</delete>
+
+    
+  
+    
+
+
+</mapper>
