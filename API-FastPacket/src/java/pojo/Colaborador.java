@@ -24,7 +24,20 @@ public class Colaborador {
 
     public Colaborador() {
     }
-
+    
+    public Colaborador(Integer idColaborador, String nombre, String apellidoPaterno, String apellidoMaterno, String noPersonal, String correo, String curp, String password, Integer idRol, String rol) {
+        this.idColaborador = idColaborador;
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.noPersonal = noPersonal;
+        this.correo = correo;
+        this.curp = curp;
+        this.password = password;
+        this.idRol = idRol;
+        this.rol = rol;
+    }
+    
     public Colaborador(Integer idColaborador, String nombre, String apellidoPaterno, String apellidoMaterno, String noPersonal, String correo, String curp, String password, Integer idRol, String rol, String fotografia) {
         this.idColaborador = idColaborador;
         this.nombre = nombre;

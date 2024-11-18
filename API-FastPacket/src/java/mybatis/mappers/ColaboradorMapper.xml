@@ -6,29 +6,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="colaborador">
     
     <select id="colaboradores" resultType="pojo.Colaborador">
-        SELECT idColaborador, c.nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp
+        SELECT idColaborador, c.nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp,
 		password, c.idRol, r.nombre AS rol
         FROM colaborador c
-        INNER JOIN rol r ON c.idColaborador = r.idRol
+        INNER JOIN rol r ON c.idRol = r.idRol
     </select>
     
-    <select id="colaboradorPorNoPersonal" resultType="pojo.Colaborador">
-        SELECT idColaborador, c.nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp
+    <select id="colaboradorPorNoPersonal" resultType="pojo.Colaborador" parameterType="String">
+        SELECT idColaborador, c.nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp,
 		password, c.idRol, r.nombre AS rol
         FROM colaborador c
-        INNER JOIN rol r ON c.idColaborador = r.idRol
+        INNER JOIN rol r ON c.idRol = r.idRol
         WHERE noPersonal = #{noPersonal}
     </select>
     
     <insert id="registro"  parameterType="pojo.Colaborador">
         INSERT INTO colaborador(nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp,
 		password, idRol)  
-        VALUES (#{nombre}, #{apellidoPaterno}, #{apellidoMaterno}, #{fechaNacimiento}, #{noPersonal}, #{telefono}, 
-                #{correo}, #{rfc}, #{curp}, #{password}, #{idRol})
+        VALUES (#{nombre}, #{apellidoPaterno}, #{apellidoMaterno}, #{noPersonal}, 
+                #{correo}, #{curp}, #{password}, #{idRol})
     </insert>
     
     <delete id="eliminar" parameterType="String">
-        DELETE FROM colaborador WHERE idColaborador = #{idColaborador}
+        CALL eliminarColaborador(#{idColaborador})
     </delete>
     
     <update id="modificar" parameterType="pojo.Colaborador">

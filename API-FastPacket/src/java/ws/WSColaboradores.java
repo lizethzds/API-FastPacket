@@ -5,7 +5,10 @@
  */
 package ws;
 
+import com.google.gson.Gson;
+import dominio.ImpColaboradores;
 import java.util.List;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -29,14 +32,14 @@ public class WSColaboradores {
     @Path("obtenerColaboradores")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Colaborador> obtenerColaboradores(){
-        return null;
+        return ImpColaboradores.obtenerColaboradores();
     }
     
     @GET
     @Path("obtenerColaboradorNoPersonal/{noPersonal}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Colaborador obtenerColaboradorNoPersonal(@PathParam("noPersonal") Integer noPersonal){
-        return null;
+    public Colaborador obtenerColaboradorNoPersonal(@PathParam("noPersonal") String noPersonal){
+        return ImpColaboradores.obtenerColaboradorNoPersonal(noPersonal);
     }
     
     @POST
@@ -44,21 +47,35 @@ public class WSColaboradores {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Mensaje agregarColaborador(String jsonColaborador){
-        return null;
+        try{
+            Gson gson = new Gson();
+            Colaborador colaborador = gson.fromJson(jsonColaborador, Colaborador.class);
+            return ImpColaboradores.agregarColaborador(colaborador);
+        }catch(Exception e){  
+            e.printStackTrace();
+            throw new BadRequestException();
+        }
     }
     
     @PUT
-    @Path("editar")
+    @Path("modificar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Mensaje editarColaborador(String jsonColaborador){
-        return null;
+        try{
+            Gson gson = new Gson();
+            Colaborador colaborador = gson.fromJson(jsonColaborador, Colaborador.class);
+            return ImpColaboradores.editarColaborador(colaborador);
+        }catch(Exception e){  
+            e.printStackTrace();
+            throw new BadRequestException();
+        }
     }
     
     @DELETE
-    @Path("obtenerColaboradores")
+    @Path("eliminar/{idColaborador}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje eliminarColaborador(Integer idColaborador){
-        return null;
+    public Mensaje eliminarColaborador(@PathParam("idColaborador") String idColaborador){
+        return ImpColaboradores.eliminarColaborador(idColaborador);
     }
 }
