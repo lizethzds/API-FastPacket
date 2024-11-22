@@ -74,10 +74,16 @@ WHERE
     </update>
 
     
-    <delete id="eliminar" parameterType="int" >
-        DELETE FROM cliente 
+   <delete id="eliminar" parameterType="int">
+    DELETE FROM cliente
+    WHERE idCliente = #{idCliente}
+    AND NOT EXISTS (
+        SELECT 1
+        FROM envio
         WHERE idCliente = #{idCliente}
-    </delete>
+    )
+</delete>
+
     
 
 
