@@ -49,16 +49,16 @@ public class ImpColaboradores {
                conexionDB.commit();
                if(filasAfectadas >= 1){
                    respuesta.setError(false);
-                   respuesta.setMensaje("El colaborador "+colaborador.toString()+" a sido registrado");
+                   respuesta.setContenido("El colaborador "+colaborador.toString()+" a sido registrado");
                }else{
-                   respuesta.setMensaje("El colaborador no pudo ser registrado");
+                   respuesta.setContenido("El colaborador no pudo ser registrado");
                }
                conexionDB.close();
             } catch (Exception e) {
-                respuesta.setMensaje(e.getMessage());
+                respuesta.setContenido(e.getMessage());
             }
         }else{
-            respuesta.setMensaje("Por el momento el servicio no se encuentra disponible");
+            respuesta.setContenido("Por el momento el servicio no se encuentra disponible");
         }
         return respuesta;
     }
@@ -72,16 +72,16 @@ public class ImpColaboradores {
                 conexionDB.commit();
                 if(filasAfectadas >= 1){
                    respuesta.setError(false);
-                   respuesta.setMensaje("El colaborador ha sido modificado con exito");
+                   respuesta.setContenido("El colaborador ha sido modificado con exito");
                }else{
-                   respuesta.setMensaje("El colaborador no pudo ser modificado");
+                   respuesta.setContenido("El colaborador no pudo ser modificado");
                }
                conexionDB.close();
             } catch (Exception e) {
-                respuesta.setMensaje(e.getMessage());
+                respuesta.setContenido(e.getMessage());
             }
         }else{
-            respuesta.setMensaje("Por el momento no es posible modificar colaboradores");
+            respuesta.setContenido("Por el momento no es posible modificar colaboradores");
         }
         return respuesta;
     }
@@ -96,15 +96,15 @@ public class ImpColaboradores {
                 conexionDB.commit();
                 if(filasAfectadas >= 1){
                    respuesta.setError(false);
-                   respuesta.setMensaje("El colaborador ha sido eliminado con exito");
+                   respuesta.setContenido("El colaborador ha sido eliminado con exito");
                }else{
-                   respuesta.setMensaje("El colaborador no pudo ser eliminado");
+                   respuesta.setContenido("El colaborador no pudo ser eliminado");
                }
             } catch (Exception e) {
-                respuesta.setMensaje(e.getMessage());
+                respuesta.setContenido(e.getMessage());
             }
         }else{
-            respuesta.setMensaje("Por el momento no es posible eliminar colaboradores");
+            respuesta.setContenido("Por el momento no es posible eliminar colaboradores");
         }
         return respuesta;
     }

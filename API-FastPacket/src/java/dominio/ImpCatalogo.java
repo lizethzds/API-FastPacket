@@ -6,6 +6,7 @@ import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojo.Estado;
 import pojo.Municipio;
+import pojo.Rol;
 
 /**
  *
@@ -33,6 +34,20 @@ public class ImpCatalogo {
         SqlSession conexionBD = MyBatisUtil.getSession();
         estado = conexionBD.selectOne("catalogo.obtenerEstadoMunicipio", idMunicipio);
         return estado;
+    }
+    
+     public static List<Rol> obtenerRoles(){
+        List<Rol> roles = null;
+        SqlSession conexionDB = MyBatisUtil.getSession();
+        if(conexionDB != null){
+            try {
+                roles = conexionDB.selectList("catalogo.obtenerRoles");
+                return roles;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return roles;
     }
     
 }

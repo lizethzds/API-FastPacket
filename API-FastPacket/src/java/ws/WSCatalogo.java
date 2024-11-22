@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import pojo.Estado;
 import pojo.Municipio;
+import pojo.Rol;
 
 /**
  *
@@ -47,6 +48,13 @@ public class WSCatalogo {
     @Produces(MediaType.APPLICATION_JSON)
     public Estado obtenerEstadoMunicipio(@PathParam("idMunicipio") Integer idMunicipio){
         return ImpCatalogo.obtenerEstadoPorMunicipio(idMunicipio);
+    }
+    
+    @Path("obtenerRoles")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Rol> obtenerRoles(){
+        return ImpCatalogo.obtenerRoles();
     }
     
     

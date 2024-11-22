@@ -24,6 +24,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE m.idMunicipio = #{idMunicipio}
     </select>
     
+    <select id="obtenerRoles" resultType="pojo.Rol">
+        SELECT idRol,nombre
+        FROM rol
+    </select>
+    
 
 
 </mapper>
