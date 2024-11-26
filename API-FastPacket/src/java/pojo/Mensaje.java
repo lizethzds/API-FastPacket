@@ -5,16 +5,20 @@
  */
 package pojo;
 
+/**
+ *
+ * @author lizet
+ */
 public class Mensaje {
     private boolean error;
-    private String mensaje;
+    private String contenido;
 
     public Mensaje() {
     }
 
-    public Mensaje(boolean error, String mensaje) {
+    public Mensaje(boolean error, String contenido) {
         this.error = error;
-        this.mensaje = mensaje;
+        this.contenido = contenido;
     }
 
     public boolean isError() {
@@ -25,13 +29,25 @@ public class Mensaje {
         this.error = error;
     }
 
-    public String getMensaje() {
-        return mensaje;
+    public String getContenido() {
+        return contenido;
     }
 
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
     }
+
+   
     
+    
+    
+    
+    
+
     
 }
+    
+    
+    
+    
+

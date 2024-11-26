@@ -16,20 +16,18 @@ public class Direccion {
     private String numero;
     private String colonia;
     private String codigoPostal;
-    private String ciudad;
-    private String estado;
+    private Integer idMunicipio;
 
     public Direccion() {
     }
 
-    public Direccion(Integer idDireccion, String calle, String numero, String colonia, String codigoPostal, String ciudad, String estado) {
+    public Direccion(Integer idDireccion, String calle, String numero, String colonia, String codigoPostal, Integer idMunicipio) {
         this.idDireccion = idDireccion;
         this.calle = calle;
         this.numero = numero;
         this.colonia = colonia;
         this.codigoPostal = codigoPostal;
-        this.ciudad = ciudad;
-        this.estado = estado;
+        this.idMunicipio = idMunicipio;
     }
 
     public Integer getIdDireccion() {
@@ -72,21 +70,14 @@ public class Direccion {
         this.codigoPostal = codigoPostal;
     }
 
-    public String getCiudad() {
-        return ciudad;
+    public Integer getIdMunicipio() {
+        return idMunicipio;
     }
 
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+    public void setIdMunicipio(Integer idMunicipio) {
+        this.idMunicipio = idMunicipio;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
     
     
     

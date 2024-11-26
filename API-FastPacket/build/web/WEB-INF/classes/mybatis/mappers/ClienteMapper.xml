@@ -12,27 +12,78 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM cliente
     </select>
     
-    <select id="obtenerDatosCliente" resultType="pojo.DatosRegistroCliente">
-        SELECT 
-            c.idCliente,
-            c.nombre,
-            c.apellidoPaterno,
-            c.apellidoMaterno,
-            c.telefono,
-            c.correo,
-            d.idDireccion,
-            d.calle,
-            d.numero,
-            d.colonia,
-            d.codigoPostal,
-            d.ciudad,
-            d.estado
-        FROM 
-            cliente c
-        JOIN 
-            direccion d ON c.idDireccion = d.idDireccion
-        WHERE c.idCliente = #{idCliente}
+    <select id="obtenerDatosCliente" resultType="pojo.DatosRegistroCliente" parameterType="int">
+    SELECT 
+    c.idCliente AS 'cliente.idCliente',
+    c.nombre AS 'cliente.nombre',
+    c.apellidoPaterno AS 'cliente.apellidoPaterno',
+    c.apellidoMaterno AS 'cliente.apellidoMaterno',
+    c.telefono AS 'cliente.telefono',
+    c.correo AS 'cliente.correo',
+
+    d.idDireccion AS 'direccion.idDireccion',
+    d.calle AS 'direccion.calle',
+    d.numero AS 'direccion.numero',
+    d.colonia AS 'direccion.colonia',
+    d.codigoPostal AS 'direccion.codigoPostal',
+    d.idMunicipio AS 'direccion.idMunicipio'
+FROM 
+    cliente c
+INNER JOIN 
+    direccion d ON c.idDireccion = d.idDireccion
+WHERE 
+    c.idCliente = #{idCliente}
+
     </select>
+    
+    <insert id="registrar" parameterType="pojo.DatosRegistroCliente" statementType="CALLABLE">
+        {CALL registrarCliente(
+        #{cliente.nombre, mode=IN, jdbcType=VARCHAR},
+        #{cliente.apellidoPaterno, mode=IN, jdbcType=VARCHAR},
+        #{cliente.apellidoMaterno, mode=IN, jdbcType=VARCHAR},
+        #{cliente.telefono, mode=IN, jdbcType=VARCHAR},
+        #{cliente.correo, mode=IN, jdbcType=VARCHAR},
+        
+
+        #{direccion.calle, mode=IN, jdbcType=VARCHAR},
+        #{direccion.numero, mode=IN, jdbcType=INTEGER},
+        #{direccion.colonia, mode=IN, jdbcType=VARCHAR},
+        #{direccion.codigoPostal, mode=IN, jdbcType=VARCHAR},
+        #{direccion.idMunicipio, mode=IN, jdbcType=INTEGER},
+
+        #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
+        #{error, mode=INOUT, jdbcType=VARCHAR}
+    )}
+    </insert>
+    
+  <update id="editar" parameterType="pojo.DatosRegistroCliente" statementType="CALLABLE">
+    {CALL editarCliente(
+        #{cliente.idCliente, mode=IN, jdbcType=INTEGER},
+        #{cliente.nombre, mode=IN, jdbcType=VARCHAR},
+        #{cliente.apellidoPaterno, mode=IN, jdbcType=VARCHAR},
+        #{cliente.apellidoMaterno, mode=IN, jdbcType=VARCHAR},
+        #{cliente.telefono, mode=IN, jdbcType=VARCHAR},
+        #{direccion.calle, mode=IN, jdbcType=VARCHAR},
+        #{direccion.numero, mode=IN, jdbcType=VARCHAR},
+        #{direccion.colonia, mode=IN, jdbcType=VARCHAR},
+        #{direccion.codigoPostal, mode=IN, jdbcType=VARCHAR},
+        #{direccion.idMunicipio, mode=IN, jdbcType=INTEGER},
+        #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
+        #{error, mode=INOUT, jdbcType=VARCHAR}
+    )}
+    </update>
+
+    
+   <delete id="eliminar" parameterType="int">
+    DELETE FROM cliente
+    WHERE idCliente = #{idCliente}
+    AND NOT EXISTS (
+        SELECT 1
+        FROM envio
+        WHERE idCliente = #{idCliente}
+    )
+</delete>
+
     
 
 
