@@ -7,14 +7,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="colaboradores" resultType="pojo.Colaborador">
         SELECT idColaborador, c.nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp,
-		password, c.idRol, r.nombre AS rol
+		password, c.idRol, r.nombre AS rol,numeroLicencia AS noLicencia
         FROM colaborador c
         INNER JOIN rol r ON c.idRol = r.idRol
     </select>
     
     <select id="colaboradorPorNoPersonal" resultType="pojo.Colaborador" parameterType="String">
         SELECT idColaborador, c.nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp,
-		password, c.idRol, r.nombre AS rol
+		password, c.idRol, r.nombre AS rol, numeroLicencia AS noLicencia
         FROM colaborador c
         INNER JOIN rol r ON c.idRol = r.idRol
         WHERE noPersonal = #{noPersonal}
@@ -22,9 +22,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <insert id="registro"  parameterType="pojo.Colaborador">
         INSERT INTO colaborador(nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp,
-		password, idRol)  
+		password, idRol, numeroLicencia)  
         VALUES (#{nombre}, #{apellidoPaterno}, #{apellidoMaterno}, #{noPersonal}, 
-                #{correo}, #{curp}, #{password}, #{idRol})
+                #{correo}, #{curp}, #{password}, #{idRol}, #{noLicencia})
     </insert>
     
     <delete id="eliminar" parameterType="String">
@@ -33,7 +33,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <update id="modificar" parameterType="pojo.Colaborador">
         UPDATE colaborador 
-	SET nombre = #{nombre},apellidoPaterno=#{apellidoPaterno},apellidoMaterno=#{apellidoMaterno}, correo= #{correo}, curp=#{curp}, password=#{password}
+	SET nombre = #{nombre},apellidoPaterno=#{apellidoPaterno},apellidoMaterno=#{apellidoMaterno}, correo= #{correo},
+                     curp=#{curp}, password=#{password}, numeroLicencia=#{noLicencia}
 	WHERE idColaborador=#{idColaborador};
     </update>
 </mapper>

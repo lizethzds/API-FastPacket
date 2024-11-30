@@ -43,13 +43,13 @@ VALUES
 ('Jorge', 'Mendoza', 'Ruiz', '2291234567', 'jorge.mendoza@example.com', 4),
 ('Lucía', 'Martínez', 'Fernández', '9991234567', 'lucia.martinez@example.com', 5);
 
-INSERT INTO Colaborador (nombre, apellidoPaterno, apellidoMaterno, curp, correo, noPersonal, password, idRol, fotografia)
+INSERT INTO Colaborador (nombre, apellidoPaterno, apellidoMaterno, curp, correo, noPersonal, password, idRol, fotografia, numeroLicencia)
 VALUES 
-('Juan', 'Pérez', 'Gómez', 'CURP12345678901234', 'juan.perez@example.com', 'NP001', 'password123', 1, NULL),
-('Ana', 'López', 'Martínez', 'CURP23456789012345', 'ana.lopez@example.com', 'NP002', 'password123', 2, NULL),
-('Luis', 'Hernández', 'Sánchez', 'CURP34567890123456', 'luis.hernandez@example.com', 'NP003', 'password123', 1, NULL),
-('María', 'García', 'Flores', 'CURP45678901234567', 'maria.garcia@example.com', 'NP004', 'password123', 3, NULL),
-('Carlos', 'Rodríguez', 'Luna', 'CURP56789012345678', 'carlos.rodriguez@example.com', 'NP005', 'password123', 2, NULL);
+('Juan', 'Pérez', 'Gómez', 'CURP12345678901234', 'juan.perez@example.com', 'NP001', 'password123', 1, NULL,NULL),
+('Ana', 'López', 'Martínez', 'CURP23456789012345', 'ana.lopez@example.com', 'NP002', 'password123', 3, NULL,1002),
+('Luis', 'Hernández', 'Sánchez', 'CURP34567890123456', 'luis.hernandez@example.com', 'NP003', 'password123', 1, NULL,NULL),
+('María', 'García', 'Flores', 'CURP45678901234567', 'maria.garcia@example.com', 'NP004', 'password123', 3, NULL, 1001),
+('Carlos', 'Rodríguez', 'Luna', 'CURP56789012345678', 'carlos.rodriguez@example.com', 'NP005', 'password123', 2, NULL,NULL);
 
 INSERT INTO TipoUnidad (tipo)
 VALUES 
@@ -67,13 +67,10 @@ VALUES
 ('Yamaha', 'FZ', '2023', 'VIN4567890123', 'ID004', 4),
 ('Freightliner', 'Cascadia', '2019', 'VIN5678901234', 'ID005', 5);
 
-INSERT INTO ColaboradorUnidad (idUnidad, idColaborador, numeroLicencia)
+INSERT INTO ColaboradorUnidad (idUnidad, idColaborador)
 VALUES 
-(1, 1, 1001),
-(2, 2, 1002),
-(3, 3, 1003),
-(4, 4, 1004),
-(5, 5, 1005);
+(1, 2),
+(2, 4);
 
 INSERT INTO Envio (noGuia, costoEnvio, idEstadoEnvio, idCliente, idColaborador, idDireccionDestino)
 VALUES 
@@ -92,7 +89,7 @@ VALUES
 (4, 4, 104, CURRENT_TIMESTAMP, CURDATE(), 1),
 (5, 5, 105, CURRENT_TIMESTAMP, CURDATE(), 2);
 
-INSERT INTO Paquete (descripcion, peso, altura, ancho, alto, idEnvio)
+INSERT INTO Paquete (descripcion, peso, altura, ancho, profundidad, idEnvio)
 VALUES 
 ('Paquete pequeño', 1, 10, 15, 20, 1),
 ('Paquete mediano', 5, 20, 25, 30, 2),
