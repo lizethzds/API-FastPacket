@@ -75,7 +75,13 @@ public class WSColaboradores {
     @DELETE
     @Path("eliminar/{idColaborador}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje eliminarColaborador(@PathParam("idColaborador") String idColaborador){
+    public Mensaje eliminarColaborador(@PathParam("idColaborador") Integer idColaborador){
         return ImpColaboradores.eliminarColaborador(idColaborador);
+    }
+    
+    @GET
+    @Path("obtenerFotografia/{idColaborador}")
+    public Mensaje obtenerFotografia(@PathParam("idColaborador") Integer idColaborador){
+        return ImpColaboradores.obtenerFotografia(idColaborador);
     }
 }

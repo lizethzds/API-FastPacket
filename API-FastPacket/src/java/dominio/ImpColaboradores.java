@@ -1,5 +1,6 @@
 package dominio;
 
+import java.util.HashMap;
 import java.util.List;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -86,7 +87,7 @@ public class ImpColaboradores {
         return respuesta;
     }
     
-    public static Mensaje eliminarColaborador(String idColaborador){
+    public static Mensaje eliminarColaborador(Integer idColaborador){
         Mensaje respuesta = new Mensaje();
         respuesta.setError(true);
         SqlSession conexionDB = MyBatisUtil.getSession();
@@ -105,6 +106,30 @@ public class ImpColaboradores {
             }
         }else{
             respuesta.setContenido("Por el momento no es posible eliminar colaboradores");
+        }
+        return respuesta;
+    }
+    
+    public static Mensaje obtenerFotografia(int idColaborador){
+        Mensaje respuesta = new Mensaje();
+        respuesta.setError(true);
+        SqlSession conexionDB = MyBatisUtil.getSession();
+        if(conexionDB != null){
+            try {   
+                String fotografiaBase64 = conexionDB.selectOne("colaborador.obtenerFotografia", idColaborador);
+                if(fotografiaBase64 != null){
+                    respuesta.setError(false);
+                    respuesta.setContenido(fotografiaBase64);
+                    return respuesta;
+                }else{
+                    respuesta.setContenido("El colaborador no existe o no cuenta con fotografía");
+                }
+                conexionDB.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            respuesta.setContenido("Por el momento no es posible obtner la fotografía de colaboradores");
         }
         return respuesta;
     }

@@ -22,9 +22,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <insert id="registro"  parameterType="pojo.Colaborador">
         INSERT INTO colaborador(nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp,
-		password, idRol, numeroLicencia)  
+		password, idRol, numeroLicencia, fotografia)  
         VALUES (#{nombre}, #{apellidoPaterno}, #{apellidoMaterno}, #{noPersonal}, 
-                #{correo}, #{curp}, #{password}, #{idRol}, #{noLicencia})
+                #{correo}, #{curp}, #{password}, #{idRol}, #{noLicencia}, #{fotografia})
     </insert>
     
     <delete id="eliminar" parameterType="String">
@@ -34,8 +34,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="modificar" parameterType="pojo.Colaborador">
         UPDATE colaborador 
 	SET nombre = #{nombre},apellidoPaterno=#{apellidoPaterno},apellidoMaterno=#{apellidoMaterno}, correo= #{correo},
-                     curp=#{curp}, password=#{password}, numeroLicencia=#{noLicencia}
+                     curp=#{curp}, password=#{password}, numeroLicencia=#{noLicencia}, fotografia = #{fotografia}
 	WHERE idColaborador=#{idColaborador};
     </update>
+    <select id="obtenerFotografia" parameterType="int" resultType="String">
+        SELECT fotografia FROM colaborador where idColaborador = #{idColaborador};
+    </select>
 </mapper>
 
