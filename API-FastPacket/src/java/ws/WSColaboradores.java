@@ -81,7 +81,22 @@ public class WSColaboradores {
     
     @GET
     @Path("obtenerFotografia/{idColaborador}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Mensaje obtenerFotografia(@PathParam("idColaborador") Integer idColaborador){
         return ImpColaboradores.obtenerFotografia(idColaborador);
+    }
+    
+    @POST
+    @Path("comprobarValoresRepetidos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje comprobarValores(String jsonColaborador){
+        try{            
+            Gson gson = new Gson();
+            Colaborador colaboraor = gson.fromJson(jsonColaborador, Colaborador.class);
+            return ImpColaboradores.comprobarValoresRepetidos(colaboraor);
+        }catch(Exception e){
+            e.printStackTrace();
+            throw new BadRequestException();
+        }
     }
 }

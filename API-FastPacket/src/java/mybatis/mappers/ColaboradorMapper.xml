@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 #{correo}, #{curp}, #{password}, #{idRol}, #{noLicencia}, #{fotografia})
     </insert>
     
-    <delete id="eliminar" parameterType="String">
+    <delete id="eliminar" parameterType="int">
         CALL eliminarColaborador(#{idColaborador})
     </delete>
     
@@ -39,6 +39,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
     <select id="obtenerFotografia" parameterType="int" resultType="String">
         SELECT fotografia FROM colaborador where idColaborador = #{idColaborador};
+    </select>
+     
+    <select id="comprobarCorreo" parameterType="String" resultType="String">
+        SELECT correo FROM colaborador WHERE correo = #{correo};
+    </select>
+    
+    <select id="comprobarCURP" parameterType="String" resultType="String">
+        SELECT curp FROM colaborador WHERE curp = #{curp};
+    </select>
+    
+    <select id="comprobarNoPersonal" parameterType="String" resultType="String">
+        SELECT noPersonal FROM colaborador WHERE noPersonal = #{noPersonal};
+    </select>
+    
+    <select id="comprobarLicencia" parameterType="String" resultType="String">
+        SELECT numeroLicencia FROM colaborador WHERE numeroLicencia = #{noLicencia};
     </select>
 </mapper>
 
