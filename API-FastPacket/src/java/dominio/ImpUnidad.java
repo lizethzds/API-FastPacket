@@ -11,6 +11,7 @@ import java.util.List;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojo.Mensaje;
+import pojo.TipoUnidad;
 import pojo.Unidad;
 
 /**
@@ -31,6 +32,13 @@ public class ImpUnidad {
         SqlSession conexion = MyBatisUtil.getSession();
         unidades = conexion.selectList("unidades.historialUnidades");
         return unidades;
+    }
+    
+     public static List<TipoUnidad> obtenerTipoUnidad() {
+        List<TipoUnidad> tipoUnidad = null;
+        SqlSession conexion = MyBatisUtil.getSession();
+        tipoUnidad = conexion.selectList("unidades.tipoUnidad");
+        return tipoUnidad;
     }
 
     public static Mensaje registrarUnidad(Unidad unidad) {

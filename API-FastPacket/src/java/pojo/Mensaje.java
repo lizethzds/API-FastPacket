@@ -15,7 +15,7 @@ public class Mensaje {
 
     public Mensaje() {
     }
-    
+
     public Mensaje(boolean error, String contenido) {
         this.error = error;
         this.contenido = contenido;
@@ -36,6 +36,11 @@ public class Mensaje {
     public void setContenido(String contenido) {
         this.contenido = contenido;
     }
+
+   
+    
+    
+    
     
     
 

@@ -20,6 +20,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import pojo.Mensaje;
+import pojo.TipoUnidad;
 import pojo.Unidad;
 
 /**
@@ -41,6 +42,13 @@ public class WSUnidad {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Unidad> historialUnidades() {
         return ImpUnidad.historialUnidades();
+    }
+    
+    @Path("listaTipoUnidad")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<TipoUnidad> listaTipoUnidad() {
+        return ImpUnidad.obtenerTipoUnidad();
     }
 
     @Path("registrar")

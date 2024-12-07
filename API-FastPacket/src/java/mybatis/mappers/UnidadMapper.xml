@@ -59,4 +59,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         activo= 0 
         WHERE idUnidad = #{idUnidad}
     </delete>
+    
+    <select id="tipoUnidad" resultType="pojo.TipoUnidad">
+        SELECT idTipoUnidad, tipo FROM tipounidad
+    </select>
 </mapper>

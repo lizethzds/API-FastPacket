@@ -29,8 +29,12 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(ws.GenericResource.class);
+        resources.add(ws.WSAutenticacion.class);
+        resources.add(ws.WSCatalogo.class);
         resources.add(ws.WSCliente.class);
+        resources.add(ws.WSColaboradores.class);
+        resources.add(ws.WSEnvio.class);
+        resources.add(ws.WSPaquete.class);
         resources.add(ws.WSUnidad.class);
     }
     

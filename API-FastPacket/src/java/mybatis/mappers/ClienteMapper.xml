@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="obtenerDatosCliente" resultType="pojo.DatosRegistroCliente" parameterType="int">
-        SELECT 
+    SELECT 
     c.idCliente AS 'cliente.idCliente',
     c.nombre AS 'cliente.nombre',
     c.apellidoPaterno AS 'cliente.apellidoPaterno',
@@ -26,8 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     d.numero AS 'direccion.numero',
     d.colonia AS 'direccion.colonia',
     d.codigoPostal AS 'direccion.codigoPostal',
-    d.ciudad AS 'direccion.ciudad',
-    d.estado AS 'direccion.estado'
+    d.idMunicipio AS 'direccion.idMunicipio'
 FROM 
     cliente c
 INNER JOIN 
@@ -50,8 +49,7 @@ WHERE
         #{direccion.numero, mode=IN, jdbcType=INTEGER},
         #{direccion.colonia, mode=IN, jdbcType=VARCHAR},
         #{direccion.codigoPostal, mode=IN, jdbcType=VARCHAR},
-        #{direccion.ciudad, mode=IN, jdbcType=VARCHAR},
-        #{direccion.estado, mode=IN, jdbcType=VARCHAR},
+        #{direccion.idMunicipio, mode=IN, jdbcType=INTEGER},
 
         #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
         #{error, mode=INOUT, jdbcType=VARCHAR}
@@ -69,18 +67,23 @@ WHERE
         #{direccion.numero, mode=IN, jdbcType=VARCHAR},
         #{direccion.colonia, mode=IN, jdbcType=VARCHAR},
         #{direccion.codigoPostal, mode=IN, jdbcType=VARCHAR},
-        #{direccion.ciudad, mode=IN, jdbcType=VARCHAR},
-        #{direccion.estado, mode=IN, jdbcType=VARCHAR},
+        #{direccion.idMunicipio, mode=IN, jdbcType=INTEGER},
         #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
         #{error, mode=INOUT, jdbcType=VARCHAR}
     )}
     </update>
 
     
-    <delete id="eliminar" parameterType="int" >
-        DELETE FROM cliente 
+   <delete id="eliminar" parameterType="int">
+    DELETE FROM cliente
+    WHERE idCliente = #{idCliente}
+    AND NOT EXISTS (
+        SELECT 1
+        FROM envio
         WHERE idCliente = #{idCliente}
-    </delete>
+    )
+</delete>
+
     
 
 
