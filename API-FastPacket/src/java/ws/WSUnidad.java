@@ -35,6 +35,13 @@ public class WSUnidad {
     public List<Unidad> obtenerUnidades() {
         return ImpUnidad.obtenerUnidades();
     }
+    
+    @Path("historialUnidades")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Unidad> historialUnidades() {
+        return ImpUnidad.historialUnidades();
+    }
 
     @Path("registrar")
     @POST
@@ -46,7 +53,7 @@ public class WSUnidad {
         } else {
             Gson gson = new Gson();
             Unidad unidad = gson.fromJson(json, Unidad.class);
-            if (unidad != null) {
+            if (unidad != null && unidad.getVin().length() == 17) {
                 return ImpUnidad.registrarUnidad(unidad);
             } else {
                 return new Mensaje(true, "No se pudo realizar el registro correctamente");
@@ -72,12 +79,14 @@ public class WSUnidad {
         }
     }
 
-    @Path("eliminar/{idUnidad}")
+    @Path("eliminar")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje eliminarUnidad(@PathParam("idUnidad") Integer idUnidad) {
-        if (idUnidad != null) {
-            return ImpUnidad.eliminarUnidad(idUnidad);
+    public Mensaje eliminarUnidad(String json) {
+        if (!json.isEmpty()) {
+            Gson gson = new Gson();
+            Unidad unidad = gson.fromJson(json, Unidad.class);
+            return ImpUnidad.eliminarUnidad(unidad.getIdUnidad(), unidad.getMotivo());
         }
         throw new WebApplicationException(Response.Status.BAD_REQUEST);
     }

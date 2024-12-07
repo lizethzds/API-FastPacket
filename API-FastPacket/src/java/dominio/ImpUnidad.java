@@ -5,6 +5,8 @@
  */
 package dominio;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -21,6 +23,13 @@ public class ImpUnidad {
         List<Unidad> unidades = null;
         SqlSession conexion = MyBatisUtil.getSession();
         unidades = conexion.selectList("unidades.obtenerUnidades");
+        return unidades;
+    }
+    
+    public static List<Unidad> historialUnidades() {
+        List<Unidad> unidades = null;
+        SqlSession conexion = MyBatisUtil.getSession();
+        unidades = conexion.selectList("unidades.historialUnidades");
         return unidades;
     }
 
@@ -74,13 +83,16 @@ public class ImpUnidad {
         return respuesta;
     }
     
-    public static Mensaje eliminarUnidad(Integer idUnidad){
+    public static Mensaje eliminarUnidad(Integer idUnidad, String motivo){
         Mensaje respuesta = new Mensaje();
         respuesta.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
         if (conexionBD != null) {
             try {
-                int filasAfectadas = conexionBD.delete("unidades.eliminar", idUnidad);
+                HashMap<String, Object> data = new LinkedHashMap<>();
+                data.put("idUnidad", idUnidad);
+                data.put("motivo", motivo);
+                int filasAfectadas = conexionBD.delete("unidades.eliminar", data);
                 conexionBD.commit();
                 if (filasAfectadas == 1) {
                     respuesta.setError(false);
