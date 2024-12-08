@@ -37,7 +37,7 @@ public class ImpAutenticacion {
                 e.printStackTrace();
                 respuestaLogin.setMensaje("Error en la validación de la sesión.");
             } finally {
-                conexionBD.close();  // Asegúrate de cerrar la conexión
+                conexionBD.close(); 
             }
             
         }else{
@@ -55,12 +55,11 @@ public class ImpAutenticacion {
         
         if(conexionBD != null){
             try{
-                // Crear el mapa de parámetros
+               
                 HashMap<String, String> parametros = new LinkedHashMap<>();
                 parametros.put("noPersonal", noPersonal);
                 parametros.put("password", password);
-                
-                // Pasar parámetros a la consulta
+          
                 Colaborador colaborador = conexionBD.selectOne("autenticacion.loginColaborador", parametros);
                 
                 if(colaborador != null){
@@ -79,7 +78,7 @@ public class ImpAutenticacion {
                 e.printStackTrace();
                 respuestaLogin.setMensaje("Error en la validación de la sesión.");
             } finally {
-                conexionBD.close();  // Asegúrate de cerrar la conexión
+                conexionBD.close(); 
             }
             
         }else{

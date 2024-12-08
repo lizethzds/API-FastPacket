@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import pojo.Estado;
+import pojo.EstadoEnvio;
 import pojo.Municipio;
 import pojo.Rol;
 
@@ -55,6 +56,13 @@ public class WSCatalogo {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Rol> obtenerRoles(){
         return ImpCatalogo.obtenerRoles();
+    }
+    
+    @Path("obtenerEstatus")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<EstadoEnvio> obtenerEstadosEstatus(){
+        return ImpCatalogo.obtenerEstadosEnvio();
     }
     
     

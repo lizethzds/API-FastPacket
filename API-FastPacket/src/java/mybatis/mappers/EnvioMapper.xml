@@ -5,6 +5,82 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="envios">
     
+    <select id="obtenerEnvios" resultType="pojo.Envio">
+         SELECT 
+        e.idEnvio AS idEnvio,
+        e.noGuia AS noGuia,
+        e.costoEnvio AS costoEnvio,
+        e.idCliente AS idCliente,
+        CONCAT(cli.nombre, ' ', cli.apellidoPaterno, ' ', cli.apellidoMaterno) AS cliente,
+        e.idColaborador AS idColaborador,
+        CONCAT(colab.nombre, ' ', colab.apellidoPaterno, ' ', colab.apellidoMaterno) AS conductor,
+        e.idEstadoEnvio AS idEstatus,
+        estEnvio.nombre AS estatus
+    FROM 
+        Envio e
+    INNER JOIN 
+        Cliente cli ON e.idCliente = cli.idCliente
+    INNER JOIN 
+        Colaborador colab ON e.idColaborador = colab.idColaborador
+    INNER JOIN 
+        EstadoEnvio estEnvio ON e.idEstadoEnvio = estEnvio.idEstadoEnvio
+        
+     WHERE isDeleted = 0
+        
+    </select>
+    
+    
+    
+    
+    <select id="obtenerDatosEnvio" resultType="pojo.DatosRegistroEnvio" parameterType="int">
+   SELECT 
+    e.idEnvio AS 'envio.idEnvio',
+    e.noGuia AS 'envio.noGuia',
+    e.costoEnvio AS 'envio.costoEnvio',
+    e.idCliente AS 'envio.idCliente',
+    e.idColaborador AS 'envio.idColaborador',
+    e.idEstadoEnvio AS 'envio.idEstadoEnvio',
+    CONCAT(colab.nombre, ' ', colab.apellidoPaterno, ' ', colab.apellidoMaterno) AS conductor,
+    
+    -- Datos de la dirección destino
+    d.idDireccion AS 'direccion.idDireccionDestino',
+    d.calle AS 'direccion.calle',
+    d.numero AS 'direccion.numero',
+    d.colonia AS 'direccion.colonia',
+    d.codigoPostal AS 'direccion.codigoPostal',
+    d.idMunicipio AS 'direccion.idMunicipio',
+
+    -- Datos del cliente
+    CONCAT(cli.nombre, ' ', cli.apellidoPaterno, ' ', cli.apellidoMaterno) AS cliente,
+    
+    -- Estatus del envío
+    est.idEstadoEnvio AS 'estatus.idEstadoEnvio',
+    est.nombre AS estadoEnvio,
+        
+    -- Dirección asociada al cliente
+    dirCliente.idDireccion AS 'direccionCliente.idDireccion',
+    dirCliente.calle AS 'direccionCliente.calle',
+    dirCliente.numero AS 'direccionCliente.numero',
+    dirCliente.colonia AS 'direccionCliente.colonia',
+    dirCliente.codigoPostal AS 'direccionCliente.codigoPostal',
+    dirCliente.idMunicipio AS 'direccionCliente.idMunicipio'
+FROM 
+    Envio e
+INNER JOIN 
+    Direccion d ON e.idDireccionDestino = d.idDireccion
+INNER JOIN 
+    Colaborador colab ON e.idColaborador = colab.idColaborador
+INNER JOIN 
+    Cliente cli ON e.idCliente = cli.idCliente
+LEFT JOIN 
+    Direccion dirCliente ON cli.idDireccion = dirCliente.idDireccion
+INNER JOIN 
+    EstadoEnvio est ON e.idEstadoEnvio = est.idEstadoEnvio
+WHERE 
+    e.idEnvio = #{idEnvio};
+
+    </select>
+    
 
   
     
@@ -48,10 +124,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
 </update>
 
-<delete id="eliminarEnvio" parameterType="int">
-    DELETE FROM envio
+<update id="eliminarEnvio" parameterType="int">
+    UPDATE envio
+    SET 
+    isDeleted = 1
     WHERE idEnvio = #{idEnvio}
-</delete>
+</update>
 
     
   

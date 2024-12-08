@@ -5,6 +5,7 @@ import java.util.List;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojo.Estado;
+import pojo.EstadoEnvio;
 import pojo.Municipio;
 import pojo.Rol;
 
@@ -49,5 +50,17 @@ public class ImpCatalogo {
         }
         return roles;
     }
+     
+     public static List<EstadoEnvio> obtenerEstadosEnvio(){
+         List<EstadoEnvio> estatus;
+         SqlSession conexionBD = MyBatisUtil.getSession();
+         estatus = conexionBD.selectList("catalogo.obtenerEstatusEnvio");
+         return estatus;
+         
+     }
+     
+     
+     
+     
     
 }

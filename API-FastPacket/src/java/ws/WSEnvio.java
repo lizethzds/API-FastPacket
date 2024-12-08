@@ -8,9 +8,11 @@ package ws;
 import com.google.gson.Gson;
 import dominio.ImpCliente;
 import dominio.ImpEnvio;
+import java.util.List;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -35,6 +37,29 @@ public class WSEnvio {
     public WSEnvio(){
         
     }
+    
+    @Path("obtenerEnvios")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Envio> obtenerEnvios(){
+        
+    return ImpEnvio.obtenerEnvios();
+    
+    }
+    
+    
+    @Path("obtenerEnvioPorId/{idEnvio}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public DatosRegistroEnvio obtenerEnvioPorId(@PathParam("idEnvio") Integer idEnvio){
+        if(idEnvio > 0){
+            return ImpEnvio.obtenerEnvioPorId(idEnvio);
+        }else{
+
+            throw new BadRequestException();
+        }
+    }
+    
     
     @Path("registrar")
     @POST
@@ -94,7 +119,7 @@ public class WSEnvio {
    @DELETE
    @Path("eliminar/{idEnvio}")
    @Produces(MediaType.APPLICATION_JSON)
-   public Mensaje eliminarCliente (@PathParam("idEnvio") Integer idEnvio){
+   public Mensaje eliminarEnvio (@PathParam("idEnvio") Integer idEnvio){
    
        if(idEnvio>0){
            return ImpEnvio.eliminarEnvio(idEnvio);

@@ -12,14 +12,14 @@ package pojo;
 public class Estado {
     
     private Integer idEstado;
-    private String nombreEstado;
+    private String nombre;
 
     public Estado() {
     }
 
-    public Estado(Integer idEstado, String nombreEstado) {
+    public Estado(Integer idEstado, String nombre) {
         this.idEstado = idEstado;
-        this.nombreEstado = nombreEstado;
+        this.nombre = nombre;
     }
 
     public Integer getIdEstado() {
@@ -30,13 +30,15 @@ public class Estado {
         this.idEstado = idEstado;
     }
 
-    public String getNombreEstado() {
-        return nombreEstado;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreEstado(String nombreEstado) {
-        this.nombreEstado = nombreEstado;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
+
+    
     
     
     

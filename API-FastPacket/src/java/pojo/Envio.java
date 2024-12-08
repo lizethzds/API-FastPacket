@@ -8,25 +8,33 @@ package pojo;
 public class Envio {
     
     private Integer idEnvio;
-    private String numGuia;
+    private String noGuia;
     private float costoEnvio;
     private Integer idEstadoEnvio;
     private Integer idCliente;
     private Integer idColaborador;
     private Integer idDireccionDestino;
+    private String cliente;
+    private String conductor;
+    private String estatus;
 
     public Envio() {
     }
 
-    public Envio(Integer idEnvio, String numGuia, float costoEnvio, Integer idEstadoEnvio, Integer idCliente, Integer idColaborador, Integer idDireccionDestino) {
+    public Envio(Integer idEnvio, String noGuia, float costoEnvio, Integer idEstadoEnvio, Integer idCliente, Integer idColaborador, Integer idDireccionDestino, String cliente, String conductor, String estatus) {
         this.idEnvio = idEnvio;
-        this.numGuia = numGuia;
+        this.noGuia = noGuia;
         this.costoEnvio = costoEnvio;
         this.idEstadoEnvio = idEstadoEnvio;
         this.idCliente = idCliente;
         this.idColaborador = idColaborador;
         this.idDireccionDestino = idDireccionDestino;
+        this.cliente = cliente;
+        this.conductor = conductor;
+        this.estatus = estatus;
     }
+
+   
 
     public Integer getIdEnvio() {
         return idEnvio;
@@ -36,13 +44,15 @@ public class Envio {
         this.idEnvio = idEnvio;
     }
 
-    public String getNumGuia() {
-        return numGuia;
+    public String getNoGuia() {
+        return noGuia;
     }
 
-    public void setNumGuia(String numGuia) {
-        this.numGuia = numGuia;
+    public void setNoGuia(String noGuia) {
+        this.noGuia = noGuia;
     }
+
+ 
 
     public float getCostoEnvio() {
         return costoEnvio;
@@ -83,6 +93,32 @@ public class Envio {
     public void setIdDireccionDestino(Integer idDireccionDestino) {
         this.idDireccionDestino = idDireccionDestino;
     }
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+
+    public String getConductor() {
+        return conductor;
+    }
+
+    public void setConductor(String conductor) {
+        this.conductor = conductor;
+    }
+
+    public String getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(String estatus) {
+        this.estatus = estatus;
+    }
+
+   
     
     
     
