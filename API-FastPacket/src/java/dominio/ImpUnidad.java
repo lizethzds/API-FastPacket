@@ -26,15 +26,15 @@ public class ImpUnidad {
         unidades = conexion.selectList("unidades.obtenerUnidades");
         return unidades;
     }
-    
+
     public static List<Unidad> historialUnidades() {
         List<Unidad> unidades = null;
         SqlSession conexion = MyBatisUtil.getSession();
         unidades = conexion.selectList("unidades.historialUnidades");
         return unidades;
     }
-    
-     public static List<TipoUnidad> obtenerTipoUnidad() {
+
+    public static List<TipoUnidad> obtenerTipoUnidad() {
         List<TipoUnidad> tipoUnidad = null;
         SqlSession conexion = MyBatisUtil.getSession();
         tipoUnidad = conexion.selectList("unidades.tipoUnidad");
@@ -45,21 +45,27 @@ public class ImpUnidad {
         Mensaje respuesta = new Mensaje();
         respuesta.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
+        boolean duplicado = conexionBD.selectOne("unidades.buscarDuplicado", unidad.getVin());
         if (conexionBD != null) {
-            try {
-                int filasAfectadas = conexionBD.insert("unidades.registrar", unidad);
-                conexionBD.commit();
-                if (filasAfectadas == 1) {
-                    respuesta.setError(false);
-                    respuesta.setContenido("Unidad registrada correctamente");
-                } else {
-                    respuesta.setContenido("No se pudo realizar el registro de la Unidad");
+            if (!duplicado) {
+                try {
+                    int filasAfectadas = conexionBD.insert("unidades.registrar", unidad);
+                    conexionBD.commit();
+                    if (filasAfectadas == 1) {
+                        respuesta.setError(false);
+                        respuesta.setContenido("Unidad registrada correctamente");
+                    } else {
+                        respuesta.setContenido("No se pudo realizar el registro de la Unidad");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    conexionBD.close();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                conexionBD.close();
+            }else{
+                 respuesta.setContenido("Ya esta registrada una Unidad con el VIN ingresado.");
             }
+
         } else {
             respuesta.setContenido("Por el momento no hay conexión con la base de datos.");
         }
@@ -90,8 +96,8 @@ public class ImpUnidad {
         }
         return respuesta;
     }
-    
-    public static Mensaje eliminarUnidad(Integer idUnidad, String motivo){
+
+    public static Mensaje eliminarUnidad(Integer idUnidad, String motivo) {
         Mensaje respuesta = new Mensaje();
         respuesta.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
