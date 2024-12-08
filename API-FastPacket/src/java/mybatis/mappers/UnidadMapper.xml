@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="unidades">
+
+    <select id="obtenerUnidades" resultType="pojo.Unidad">
+        SELECT 
+        u.idUnidad, 
+        u.marca, 
+        u.modelo, 
+        u.anio, 
+        u.vin, 
+        u.noIdentificacion, 
+        u.idTipoUnidad, 
+        tu.tipo AS 'tipoUnidad'
+        FROM unidad u 
+        INNER JOIN tipounidad tu ON u.idTipoUnidad = tu.idTipoUnidad
+        WHERE activo = true
+    </select>
+    
+    <select id="historialUnidades" resultType="pojo.Unidad">
+        SELECT 
+        u.idUnidad, 
+        u.marca, 
+        u.modelo, 
+        u.anio, 
+        u.vin, 
+        u.noIdentificacion, 
+        u.idTipoUnidad, 
+        u.motivo,
+        tu.tipo AS 'tipoUnidad'
+        FROM unidad u 
+        INNER JOIN tipounidad tu ON u.idTipoUnidad = tu.idTipoUnidad
+        WHERE activo = false
+    </select>
+    
+    <insert id="registrar" parameterType="pojo.Unidad">
+        INSERT INTO unidad (marca, modelo, anio, vin, noIdentificacion, idTipoUnidad)
+        VALUES (#{marca},#{modelo},#{anio},#{vin},#{noIdentificacion},#{idTipoUnidad})
+    </insert>
+    
+    <update id="editar" parameterType="pojo.Unidad">
+        UPDATE unidad 
+        SET 
+        marca = #{marca}, 
+        modelo= #{modelo}, 
+        anio= #{anio}, 
+        vin = #{vin}, 
+        noIdentificacion = #{noIdentificacion}, 
+        idTipoUnidad = #{idTipoUnidad}
+        WHERE idUnidad = #{idUnidad}
+    </update>
+    
+    <delete id="eliminar" parameterType="map">
+        UPDATE unidad SET 
+        motivo = #{motivo}, 
+        activo= 0 
+        WHERE idUnidad = #{idUnidad}
+    </delete>
+    
+    <select id="tipoUnidad" resultType="pojo.TipoUnidad">
+        SELECT idTipoUnidad, tipo FROM tipounidad
+    </select>
+</mapper>
