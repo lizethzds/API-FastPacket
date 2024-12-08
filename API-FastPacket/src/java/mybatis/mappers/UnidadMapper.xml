@@ -36,6 +36,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE activo = false
     </select>
     
+    <select id="buscarDuplicado" parameterType="String" resultType="Boolean">
+        SELECT CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END
+        FROM unidad
+        WHERE vin = #{vin}
+    </select>
+    
     <insert id="registrar" parameterType="pojo.Unidad">
         INSERT INTO unidad (marca, modelo, anio, vin, noIdentificacion, idTipoUnidad)
         VALUES (#{marca},#{modelo},#{anio},#{vin},#{noIdentificacion},#{idTipoUnidad})
