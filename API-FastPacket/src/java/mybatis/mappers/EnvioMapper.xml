@@ -29,10 +29,73 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         
     </select>
     
-    
-    
-    
     <select id="obtenerDatosEnvio" resultType="pojo.DatosRegistroEnvio" parameterType="int">
+        SELECT 
+    e.idEnvio AS 'envio.idEnvio',
+    e.noGuia AS 'envio.noGuia',
+    e.costoEnvio AS 'envio.costoEnvio',
+    e.idCliente AS 'envio.idCliente',
+    e.idColaborador AS 'envio.idColaborador',
+    e.idEstadoEnvio AS 'envio.idEstadoEnvio',
+    CONCAT(colab.nombre, ' ', colab.apellidoPaterno, ' ', colab.apellidoMaterno) AS conductor,
+    
+    -- Datos de la dirección destino
+    d.idDireccion AS 'direccion.idDireccionDestino',
+    d.calle AS 'direccion.calle',
+    d.numero AS 'direccion.numero',
+    d.colonia AS 'direccion.colonia',
+    d.codigoPostal AS 'direccion.codigoPostal',
+    d.idMunicipio AS 'direccion.idMunicipio',
+
+    -- Lugar de destino (nombre del municipio y estado)
+    CONCAT(munDestino.nombre, ', ', estDestino.nombre) AS 'lugarDestino',
+
+    -- Lugar de origen (dirección asociada al cliente)
+    dirCliente.idDireccion AS 'direccionCliente.idDireccion',
+    dirCliente.calle AS 'direccionCliente.calle',
+    dirCliente.numero AS 'direccionCliente.numero',
+    dirCliente.colonia AS 'direccionCliente.colonia',
+    dirCliente.codigoPostal AS 'direccionCliente.codigoPostal',
+    dirCliente.idMunicipio AS 'direccionCliente.idMunicipio',
+    CONCAT(munOrigen.nombre, ', ', estOrigen.nombre) AS 'lugarOrigen',
+
+    -- Datos del cliente
+    CONCAT(cli.nombre, ' ', cli.apellidoPaterno, ' ', cli.apellidoMaterno) AS cliente,
+    cli.correo AS correoCliente,
+    cli.telefono AS telefonoCliente,
+    
+    -- Estatus del envío
+    estEnvio.idEstadoEnvio AS 'estatus.idEstadoEnvio',
+    estEnvio.nombre AS estadoEnvio
+FROM 
+    Envio e
+INNER JOIN 
+    Direccion d ON e.idDireccionDestino = d.idDireccion
+INNER JOIN 
+    Municipio munDestino ON d.idMunicipio = munDestino.idMunicipio
+INNER JOIN 
+    Estado estDestino ON munDestino.idEstado = estDestino.idEstado
+INNER JOIN 
+    Colaborador colab ON e.idColaborador = colab.idColaborador
+INNER JOIN 
+    Cliente cli ON e.idCliente = cli.idCliente
+LEFT JOIN 
+    Direccion dirCliente ON cli.idDireccion = dirCliente.idDireccion
+LEFT JOIN 
+    Municipio munOrigen ON dirCliente.idMunicipio = munOrigen.idMunicipio
+LEFT JOIN 
+    Estado estOrigen ON munOrigen.idEstado = estOrigen.idEstado
+INNER JOIN 
+    EstadoEnvio estEnvio ON e.idEstadoEnvio = estEnvio.idEstadoEnvio
+WHERE 
+    e.idEnvio = #{idEnvio};
+
+        
+    </select>
+    
+    
+    
+    <select id="obtenerDetalleEnvio" resultType="pojo.DatosRegistroEnvio" parameterType="int">
    SELECT 
     e.idEnvio AS 'envio.idEnvio',
     e.noGuia AS 'envio.noGuia',
