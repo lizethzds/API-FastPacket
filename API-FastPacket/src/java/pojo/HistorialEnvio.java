@@ -13,29 +13,22 @@ public class HistorialEnvio {
     private Integer idEstadoEnvio;
     private String comentario;
     private String horaModificacion;
-    private String fechaModificacion;
-    private String estadoEnvio;
     private String colaborador;
     private String estatus;
 
     public HistorialEnvio() {
     }
 
-    public HistorialEnvio(Integer idHistorial, Integer idColaborador, Integer idEnvio, Integer idEstadoEnvio, String comentario, 
-            String horaModificacion, String fechaModificacion, String estadoEnvio, String colaborador, String estatus) {
+    public HistorialEnvio(Integer idHistorial, Integer idColaborador, Integer idEnvio, Integer idEstadoEnvio, String comentario, String horaModificacion, String colaborador, String estatus) {
         this.idHistorial = idHistorial;
         this.idColaborador = idColaborador;
         this.idEnvio = idEnvio;
         this.idEstadoEnvio = idEstadoEnvio;
         this.comentario = comentario;
         this.horaModificacion = horaModificacion;
-        this.fechaModificacion = fechaModificacion;
-        this.estadoEnvio = estadoEnvio;
         this.colaborador = colaborador;
         this.estatus = estatus;
     }
-
-    
 
     public Integer getIdHistorial() {
         return idHistorial;
@@ -85,22 +78,6 @@ public class HistorialEnvio {
         this.horaModificacion = horaModificacion;
     }
 
-    public String getFechaModificacion() {
-        return fechaModificacion;
-    }
-
-    public void setFechaModificacion(String fechaModificacion) {
-        this.fechaModificacion = fechaModificacion;
-    }
-
-    public String getEstadoEnvio() {
-        return estadoEnvio;
-    }
-
-    public void setEstadoEnvio(String estadoEnvio) {
-        this.estadoEnvio = estadoEnvio;
-    }
-
     public String getColaborador() {
         return colaborador;
     }
@@ -116,7 +93,10 @@ public class HistorialEnvio {
     public void setEstatus(String estatus) {
         this.estatus = estatus;
     }
-    
+
+   
+
+  
     
     
     
