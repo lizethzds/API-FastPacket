@@ -7,12 +7,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
 
     <select id="obtenerEstados" resultType="pojo.Estado">
-        SELECT idEstado, nombreEstado
+        SELECT idEstado, nombre
         FROM estado
     </select>
     
     <select id="obtenerMunicipiosEstado" parameterType="int" resultType="pojo.Municipio">
-        SELECT idMunicipio, nombreMunicipio, idEstado
+        SELECT idMunicipio, nombre, idEstado
         FROM municipio
         WHERE idEstado = #{idEstado}
     </select>
@@ -27,6 +27,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="obtenerRoles" resultType="pojo.Rol">
         SELECT idRol,nombre
         FROM rol
+    </select>
+    
+    
+    <select id="obtenerEstatusEnvio" resultType="pojo.EstadoEnvio">
+        SELECT idEstadoEnvio, nombre
+        FROM estadoenvio
+        
     </select>
     
 

@@ -27,11 +27,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     d.colonia AS 'direccion.colonia',
     d.codigoPostal AS 'direccion.codigoPostal',
     d.idMunicipio AS 'direccion.idMunicipio'
+<<<<<<< HEAD
     FROM 
         cliente c
     INNER JOIN 
         direccion d ON c.idDireccion = d.idDireccion
     WHERE 
+=======
+FROM 
+    cliente c
+INNER JOIN 
+    direccion d ON c.idDireccion = d.idDireccion
+WHERE 
+>>>>>>> c8403f9965613548483c960bfb0ae638df048278
     c.idCliente = #{idCliente}
 
     </select>
@@ -81,5 +89,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM envio
         WHERE idCliente = #{idCliente}
     )
+<<<<<<< HEAD
     </delete>
+=======
+</delete>
+
+    
+
+
+>>>>>>> c8403f9965613548483c960bfb0ae638df048278
 </mapper>

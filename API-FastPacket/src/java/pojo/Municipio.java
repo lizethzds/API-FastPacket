@@ -12,15 +12,15 @@ package pojo;
 public class Municipio {
     
     private Integer idMunicipio;
-    private String nombreMunicipio;
+    private String nombre;
     private Integer idEstado;
 
     public Municipio() {
     }
 
-    public Municipio(Integer idMunicipio, String nombreMunicipio, Integer idEstado) {
+    public Municipio(Integer idMunicipio, String nombre, Integer idEstado) {
         this.idMunicipio = idMunicipio;
-        this.nombreMunicipio = nombreMunicipio;
+        this.nombre = nombre;
         this.idEstado = idEstado;
     }
 
@@ -32,12 +32,12 @@ public class Municipio {
         this.idMunicipio = idMunicipio;
     }
 
-    public String getNombreMunicipio() {
-        return nombreMunicipio;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreMunicipio(String nombreMunicipio) {
-        this.nombreMunicipio = nombreMunicipio;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public Integer getIdEstado() {
@@ -47,6 +47,8 @@ public class Municipio {
     public void setIdEstado(Integer idEstado) {
         this.idEstado = idEstado;
     }
+    
+    
     
     
     

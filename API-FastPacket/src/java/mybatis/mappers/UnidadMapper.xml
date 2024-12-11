@@ -16,7 +16,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         u.idTipoUnidad, 
         tu.tipo AS 'tipoUnidad'
         FROM unidad u 
-        INNER JOIN tipounidad tu ON u.idUnidad = tu.idTipoUnidad
+        INNER JOIN tipounidad tu ON u.idTipoUnidad = tu.idTipoUnidad
+        WHERE activo = true
+    </select>
+    
+    <select id="historialUnidades" resultType="pojo.Unidad">
+        SELECT 
+        u.idUnidad, 
+        u.marca, 
+        u.modelo, 
+        u.anio, 
+        u.vin, 
+        u.noIdentificacion, 
+        u.idTipoUnidad, 
+        u.motivo,
+        tu.tipo AS 'tipoUnidad'
+        FROM unidad u 
+        INNER JOIN tipounidad tu ON u.idTipoUnidad = tu.idTipoUnidad
+        WHERE activo = false
+    </select>
+    
+    <select id="buscarDuplicado" parameterType="String" resultType="Boolean">
+        SELECT CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END
+        FROM unidad
+        WHERE vin = #{vin}
     </select>
     
     <insert id="registrar" parameterType="pojo.Unidad">
@@ -36,8 +59,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE idUnidad = #{idUnidad}
     </update>
     
-    <delete id="eliminar" parameterType="int">
-        DELETE FROM unidad 
+    <delete id="eliminar" parameterType="map">
+        UPDATE unidad SET 
+        motivo = #{motivo}, 
+        activo= 0 
         WHERE idUnidad = #{idUnidad}
     </delete>
+    
+    <select id="tipoUnidad" resultType="pojo.TipoUnidad">
+        SELECT idTipoUnidad, tipo FROM tipounidad
+    </select>
 </mapper>

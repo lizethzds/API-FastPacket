@@ -28,14 +28,9 @@ public class ImpCliente {
     SqlSession conexionBD = MyBatisUtil.getSession();
     try {
         clienteSolicitado = conexionBD.selectOne("clientes.obtenerDatosCliente", idCliente);
-        System.out.println(clienteSolicitado.getCliente().getNombre());
     } catch (Exception e) {
-        System.err.println("Error al obtener el cliente: " + e.getMessage());
+      
         e.printStackTrace();
-    } finally {
-        if (conexionBD != null) {
-            conexionBD.close();
-        }
     }
     return clienteSolicitado;
 }

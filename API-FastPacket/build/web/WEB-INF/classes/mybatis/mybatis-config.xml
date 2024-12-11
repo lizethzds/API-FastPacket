@@ -18,11 +18,21 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
     </environments>
     <mappers>
         <mapper resource="mybatis/mappers/ClienteMapper.xml"/>
+<<<<<<< HEAD
+=======
+        <mapper resource="mybatis/mappers/UnidadMapper.xml"/>
+>>>>>>> c8403f9965613548483c960bfb0ae638df048278
         <mapper resource="mybatis/mappers/ColaboradorMapper.xml"/>
         <mapper resource="mybatis/mappers/PaqueteMapper.xml"/>
         <mapper resource="mybatis/mappers/EnvioMapper.xml"/>
         <mapper resource="mybatis/mappers/CatalogoMapper.xml"/>
         <mapper resource="mybatis/mappers/AutenticacionMapper.xml"/>
+<<<<<<< HEAD
         <mapper resource="mybatis/mappers/UnidadMapper.xml"/>
+=======
+        <mapper resource="mybatis/mappers/HistorialMapper.xml"/>
+        
+
+>>>>>>> c8403f9965613548483c960bfb0ae638df048278
     </mappers>
 </configuration>

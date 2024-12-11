@@ -5,9 +5,11 @@
  */
 package dominio;
 
+import java.util.List;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojo.DatosRegistroEnvio;
+import pojo.Envio;
 import pojo.Mensaje;
 
 /**
@@ -15,6 +17,33 @@ import pojo.Mensaje;
  * @author lizet
  */
 public class ImpEnvio {
+    
+    
+    
+    public static List<Envio> obtenerEnvios(){
+        List<Envio> envios;
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        envios = conexionBD.selectList("envios.obtenerEnvios");
+        return envios;
+    }
+    
+    
+    public static DatosRegistroEnvio obtenerEnvioPorId(Integer idEnvio){
+        DatosRegistroEnvio envioSolicitado = new DatosRegistroEnvio();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        
+        try{
+            envioSolicitado = conexionBD.selectOne("envios.obtenerDatosEnvio", idEnvio);
+            
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return envioSolicitado;
+    
+    }
+    
+    
     
     public static Mensaje registrarEnvio(DatosRegistroEnvio datosEnvio){
        Mensaje msj = new Mensaje();
@@ -82,7 +111,7 @@ public class ImpEnvio {
         SqlSession conexionBD = MyBatisUtil.getSession();
         
         if(conexionBD != null){
-            int filasAfectadas = conexionBD.delete("envios.eliminarEnvio", idEnvio);
+            int filasAfectadas = conexionBD.update("envios.eliminarEnvio", idEnvio);
             conexionBD.commit();
             if(filasAfectadas>0){
                 msj.setError(false);
