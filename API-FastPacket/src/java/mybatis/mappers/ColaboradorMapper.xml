@@ -7,14 +7,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="colaboradores" resultType="pojo.Colaborador">
         SELECT idColaborador, c.nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp,
-		password, c.idRol, r.nombre AS rol
+		password, c.idRol, r.nombre AS rol,numeroLicencia AS noLicencia
         FROM colaborador c
         INNER JOIN rol r ON c.idRol = r.idRol
     </select>
     
     <select id="colaboradorPorNoPersonal" resultType="pojo.Colaborador" parameterType="String">
         SELECT idColaborador, c.nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp,
-		password, c.idRol, r.nombre AS rol
+		password, c.idRol, r.nombre AS rol, numeroLicencia AS noLicencia
         FROM colaborador c
         INNER JOIN rol r ON c.idRol = r.idRol
         WHERE noPersonal = #{noPersonal}
@@ -22,19 +22,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <insert id="registro"  parameterType="pojo.Colaborador">
         INSERT INTO colaborador(nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp,
-		password, idRol)  
+		password, idRol, numeroLicencia, fotografia)  
         VALUES (#{nombre}, #{apellidoPaterno}, #{apellidoMaterno}, #{noPersonal}, 
-                #{correo}, #{curp}, #{password}, #{idRol})
+                #{correo}, #{curp}, #{password}, #{idRol}, #{noLicencia}, #{fotografia})
     </insert>
     
-    <delete id="eliminar" parameterType="String">
+    <delete id="eliminar" parameterType="int">
         CALL eliminarColaborador(#{idColaborador})
     </delete>
     
     <update id="modificar" parameterType="pojo.Colaborador">
         UPDATE colaborador 
-	SET nombre = #{nombre},apellidoPaterno=#{apellidoPaterno},apellidoMaterno=#{apellidoMaterno}, correo= #{correo}, curp=#{curp}, password=#{password}
+	SET nombre = #{nombre},apellidoPaterno=#{apellidoPaterno},apellidoMaterno=#{apellidoMaterno}, correo= #{correo},
+                     curp=#{curp}, password=#{password}, numeroLicencia=#{noLicencia}, fotografia = #{fotografia}
 	WHERE idColaborador=#{idColaborador};
     </update>
+    <select id="obtenerFotografia" parameterType="int" resultType="String">
+        SELECT fotografia FROM colaborador where idColaborador = #{idColaborador};
+    </select>
+     
+    <select id="comprobarCorreo" parameterType="String" resultType="String">
+        SELECT correo FROM colaborador WHERE correo = #{correo};
+    </select>
+    
+    <select id="comprobarCURP" parameterType="String" resultType="String">
+        SELECT curp FROM colaborador WHERE curp = #{curp};
+    </select>
+    
+    <select id="comprobarNoPersonal" parameterType="String" resultType="String">
+        SELECT noPersonal FROM colaborador WHERE noPersonal = #{noPersonal};
+    </select>
+    
+    <select id="comprobarLicencia" parameterType="String" resultType="String">
+        SELECT numeroLicencia FROM colaborador WHERE numeroLicencia = #{noLicencia};
+    </select>
 </mapper>
 
