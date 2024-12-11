@@ -13,11 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="obtenerDatosCliente" resultType="pojo.DatosRegistroCliente" parameterType="int">
-<<<<<<< HEAD
     SELECT 
-=======
-        SELECT 
->>>>>>> bec9bc0b662bc7a1f8fbc70a4c233450dc928e1b
     c.idCliente AS 'cliente.idCliente',
     c.nombre AS 'cliente.nombre',
     c.apellidoPaterno AS 'cliente.apellidoPaterno',
@@ -30,17 +26,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     d.numero AS 'direccion.numero',
     d.colonia AS 'direccion.colonia',
     d.codigoPostal AS 'direccion.codigoPostal',
-<<<<<<< HEAD
     d.idMunicipio AS 'direccion.idMunicipio'
-=======
-    d.ciudad AS 'direccion.ciudad',
-    d.estado AS 'direccion.estado'
->>>>>>> bec9bc0b662bc7a1f8fbc70a4c233450dc928e1b
-FROM 
-    cliente c
-INNER JOIN 
-    direccion d ON c.idDireccion = d.idDireccion
-WHERE 
+    FROM 
+        cliente c
+    INNER JOIN 
+        direccion d ON c.idDireccion = d.idDireccion
+    WHERE 
     c.idCliente = #{idCliente}
 
     </select>
@@ -58,18 +49,13 @@ WHERE
         #{direccion.numero, mode=IN, jdbcType=INTEGER},
         #{direccion.colonia, mode=IN, jdbcType=VARCHAR},
         #{direccion.codigoPostal, mode=IN, jdbcType=VARCHAR},
-<<<<<<< HEAD
         #{direccion.idMunicipio, mode=IN, jdbcType=INTEGER},
-=======
-        #{direccion.ciudad, mode=IN, jdbcType=VARCHAR},
-        #{direccion.estado, mode=IN, jdbcType=VARCHAR},
->>>>>>> bec9bc0b662bc7a1f8fbc70a4c233450dc928e1b
 
         #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
         #{error, mode=INOUT, jdbcType=VARCHAR}
     )}
     </insert>
-    
+        
   <update id="editar" parameterType="pojo.DatosRegistroCliente" statementType="CALLABLE">
     {CALL editarCliente(
         #{cliente.idCliente, mode=IN, jdbcType=INTEGER},
@@ -81,19 +67,12 @@ WHERE
         #{direccion.numero, mode=IN, jdbcType=VARCHAR},
         #{direccion.colonia, mode=IN, jdbcType=VARCHAR},
         #{direccion.codigoPostal, mode=IN, jdbcType=VARCHAR},
-<<<<<<< HEAD
         #{direccion.idMunicipio, mode=IN, jdbcType=INTEGER},
-=======
-        #{direccion.ciudad, mode=IN, jdbcType=VARCHAR},
-        #{direccion.estado, mode=IN, jdbcType=VARCHAR},
->>>>>>> bec9bc0b662bc7a1f8fbc70a4c233450dc928e1b
         #{filasAfectadas, mode=INOUT, jdbcType=INTEGER},
         #{error, mode=INOUT, jdbcType=VARCHAR}
     )}
     </update>
-
     
-<<<<<<< HEAD
    <delete id="eliminar" parameterType="int">
     DELETE FROM cliente
     WHERE idCliente = #{idCliente}
@@ -102,15 +81,5 @@ WHERE
         FROM envio
         WHERE idCliente = #{idCliente}
     )
-</delete>
-
-=======
-    <delete id="eliminar" parameterType="int" >
-        DELETE FROM cliente 
-        WHERE idCliente = #{idCliente}
     </delete>
->>>>>>> bec9bc0b662bc7a1f8fbc70a4c233450dc928e1b
-    
-
-
 </mapper>

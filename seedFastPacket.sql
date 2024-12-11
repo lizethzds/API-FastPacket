@@ -83,12 +83,18 @@ VALUES
 
 INSERT INTO HistorialEnvio (idColaborador, idEnvio, comentario, horaModificacion, fechaModificacion, idEstadoEnvio)
 VALUES 
-(1, 1, 101, CURRENT_TIMESTAMP, CURDATE(), 1),
-(2, 2, 102, CURRENT_TIMESTAMP, CURDATE(), 2),
-(3, 3, 103, CURRENT_TIMESTAMP, CURDATE(), 3),
-(4, 4, 104, CURRENT_TIMESTAMP, CURDATE(), 1),
-(5, 5, 105, CURRENT_TIMESTAMP, CURDATE(), 2);
+(1, 1, 101, current_time, current_date, 1),
+(2, 2, 102, current_time, current_date, 2),
+(3, 3, 103, current_time, current_date, 3),
+(4, 4, 104, current_time, current_date, 1),
+(5, 5, 105, current_time, current_date, 2);
 
+
+INSERT INTO HistorialEnvio (idColaborador, idEnvio, comentario, horaModificacion, fechaModificacion, idEstadoEnvio)
+VALUES 
+(1, 1, 101, current_time, current_date, 1);
+
+select * from HistorialEnvio;
 INSERT INTO Paquete (descripcion, peso, altura, ancho, profundidad, idEnvio)
 VALUES 
 ('Paquete pequeño', 1, 10, 15, 20, 1),
@@ -96,3 +102,6 @@ VALUES
 ('Paquete grande', 10, 30, 35, 40, 3),
 ('Paquete frágil', 2, 15, 20, 25, 4),
 ('Paquete voluminoso', 20, 50, 60, 70, 5);
+
+
+

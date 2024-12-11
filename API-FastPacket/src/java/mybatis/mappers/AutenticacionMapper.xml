@@ -7,8 +7,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
 
     <select id="loginColaborador" resultType="pojo.Colaborador">
-        SELECT idColaborador, nombre, apellidoPaterno, apellidoMaterno,
-        noPersonal, correo, curp, password, colaborador.idRol, rol.rol AS 'rol' FROM colaborador 
+        SELECT idColaborador, colaborador.nombre, apellidoPaterno, apellidoMaterno,
+        noPersonal, correo, curp, password, colaborador.idRol, rol.nombre AS 'rol' FROM colaborador 
         INNER JOIN rol ON colaborador.idRol = rol.idRol
         WHERE noPersonal = #{noPersonal} AND password = #{password}
     </select>
