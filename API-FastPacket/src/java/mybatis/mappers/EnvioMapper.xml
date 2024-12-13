@@ -194,9 +194,11 @@ WHERE
     WHERE idEnvio = #{idEnvio}
 </update>
 
-    
-  
-    
+<select id="enviosPorConductor" parameterType="int" resultType="pojo.Envio">
+    SELECT idEnvio, noGuia, costoEnvio, envio.idEstadoEnvio, estadoenvio.nombre AS 'estatus' FROM envio
+    INNER JOIN estadoenvio ON estadoenvio.idEstadoEnvio = envio.idEstadoEnvio
+    WHERE idColaborador = #{idColaborador} AND isDeleted = 0
+</select>
 
 
 </mapper>

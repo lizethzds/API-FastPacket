@@ -128,5 +128,16 @@ public class WSEnvio {
        }
        
    }
+   
+   @Path("enviosPorConductor/{idColaborador}")
+   @GET
+   @Produces(MediaType.APPLICATION_JSON)
+   public List<Envio> enviosPorCondutor (@PathParam("idColaborador") Integer idColaborador){
+       if (idColaborador > 0) {
+           return ImpEnvio.obtenerEnviosPorConductor(idColaborador);
+       }else{
+           throw new BadRequestException();
+       }
+   }
     
 }

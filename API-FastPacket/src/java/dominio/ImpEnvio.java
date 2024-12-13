@@ -130,4 +130,13 @@ public class ImpEnvio {
     
     }
     
+    public static List<Envio> obtenerEnviosPorConductor(int idColaborador){
+        List<Envio> envios = null;
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            envios = conexionBD.selectList("envios.enviosPorConductor", idColaborador);
+        }
+        return  envios;
+    }
+    
 }
