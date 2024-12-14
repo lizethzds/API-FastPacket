@@ -63,6 +63,7 @@ WHERE
         #{cliente.apellidoPaterno, mode=IN, jdbcType=VARCHAR},
         #{cliente.apellidoMaterno, mode=IN, jdbcType=VARCHAR},
         #{cliente.telefono, mode=IN, jdbcType=VARCHAR},
+        #{cliente.correo, mode=IN, jdbcType=VARCHAR},
         #{direccion.calle, mode=IN, jdbcType=VARCHAR},
         #{direccion.numero, mode=IN, jdbcType=VARCHAR},
         #{direccion.colonia, mode=IN, jdbcType=VARCHAR},

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dominio;
 
 import java.util.List;
@@ -111,7 +107,7 @@ public class ImpEnvio {
         SqlSession conexionBD = MyBatisUtil.getSession();
         
         if(conexionBD != null){
-            int filasAfectadas = conexionBD.update("envios.eliminarEnvio", idEnvio);
+            int filasAfectadas = conexionBD.delete("envios.eliminar", idEnvio);
             conexionBD.commit();
             if(filasAfectadas>0){
                 msj.setError(false);

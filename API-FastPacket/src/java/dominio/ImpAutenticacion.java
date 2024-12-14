@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import pojo.AutenticacionColaborador;
 import pojo.Colaborador;
 
+
 public class ImpAutenticacion {
 
     public static AutenticacionColaborador validarSesionEscritorio(String noPersonal, String password){
