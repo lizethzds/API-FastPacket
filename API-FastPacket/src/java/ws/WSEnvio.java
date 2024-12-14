@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ws;
 
 import com.google.gson.Gson;
@@ -120,6 +116,25 @@ public class WSEnvio {
         
         return msj;
         
+    }
+    
+    
+    @Path("editarEstatus")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje editarEstatusEnvio(String json){
+        Mensaje msj = new Mensaje();
+        if(json.isEmpty()){
+            throw new BadRequestException();
+        }else{
+        Gson gson = new Gson();
+        Envio envio = gson.fromJson(json, Envio.class);
+        
+        msj =  ImpEnvio.editarEstatusEnvio(envio);
+       
+        }
+        return msj;
     }
     
     

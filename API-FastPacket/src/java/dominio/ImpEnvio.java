@@ -113,6 +113,37 @@ public class ImpEnvio {
     }
     
     
+    public static Mensaje editarEstatusEnvio(Envio envioEstatus){
+    Mensaje msj = new Mensaje();
+    msj.setError(true);
+    SqlSession conexionBD = MyBatisUtil.getSession();
+    if(conexionBD != null){
+            try{
+                int filasAfectadas = conexionBD.update("envios.editarEstatus", envioEstatus);
+                conexionBD.commit();
+                
+                if(filasAfectadas>0){
+                    msj.setError(false);
+                    msj.setContenido("El estatus del envío ha sido actualizado");
+                }else{
+                msj.setContenido("Ha ocurrido un error al intentar actualizar el estatus del envío");
+                }
+                
+            }catch(Exception e){
+                msj.setContenido("Ocurrió un error al realizar el la acutalización.");
+                e.printStackTrace();
+                
+            }
+        }else{
+            msj.setContenido("No hay conexion con la BD");
+        }
+               
+    return msj;   
+    
+    
+    }
+    
+    
     public static Mensaje eliminarEnvio (Integer idEnvio){
         Mensaje msj = new Mensaje();
         msj.setError(true);
