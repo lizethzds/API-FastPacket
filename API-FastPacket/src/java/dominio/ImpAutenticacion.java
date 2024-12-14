@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import pojo.AutenticacionColaborador;
 import pojo.Colaborador;
 
+
 public class ImpAutenticacion {
 
     public static AutenticacionColaborador validarSesionEscritorio(String noPersonal, String password){
@@ -22,6 +23,7 @@ public class ImpAutenticacion {
                 parametros.put("noPersonal", noPersonal);
                 parametros.put("password", password);
                 
+                System.err.println("noPersonal"+noPersonal+"  password"+password);
                 // Pasar parámetros a la consulta
                 Colaborador colaborador = conexionBD.selectOne("autenticacion.loginColaborador", parametros);
                 

@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ws;
 
 import com.google.gson.Gson;
-import dominio.ImpCliente;
 import dominio.ImpEnvio;
 import java.util.List;
 import javax.ws.rs.BadRequestException;
@@ -18,9 +13,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import pojo.DatosRegistroEnvio;
 import pojo.Direccion;
 import pojo.Envio;
@@ -57,6 +50,17 @@ public class WSEnvio {
         }else{
 
             throw new BadRequestException();
+        }
+    }
+    
+    @Path("obtenerEnvioPorNoGuia/{noGuia}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Envio obtenerEnvioPorNumGuia(@PathParam("noGuia") String noGuia){
+        if(noGuia.contains("FP")){
+            return ImpEnvio.obtenerEnvioPorNumGuia(noGuia);
+        }else{
+          throw new BadRequestException();
         }
     }
     
@@ -112,6 +116,25 @@ public class WSEnvio {
         
         return msj;
         
+    }
+    
+    
+    @Path("editarEstatus")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje editarEstatusEnvio(String json){
+        Mensaje msj = new Mensaje();
+        if(json.isEmpty()){
+            throw new BadRequestException();
+        }else{
+        Gson gson = new Gson();
+        Envio envio = gson.fromJson(json, Envio.class);
+        
+        msj =  ImpEnvio.editarEstatusEnvio(envio);
+       
+        }
+        return msj;
     }
     
     

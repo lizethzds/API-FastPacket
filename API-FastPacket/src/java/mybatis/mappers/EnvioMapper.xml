@@ -24,8 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         Colaborador colab ON e.idColaborador = colab.idColaborador
     INNER JOIN 
         EstadoEnvio estEnvio ON e.idEstadoEnvio = estEnvio.idEstadoEnvio
-        
-     WHERE isDeleted = 0
+       
         
     </select>
     
@@ -187,17 +186,32 @@ WHERE
     
 </update>
 
-<update id="eliminarEnvio" parameterType="int">
-    UPDATE envio
-    SET 
-    isDeleted = 1
+<update id="editarEstatus" parameterType="pojo.Envio">
+    UPDATE envio 
+    SET idEstadoEnvio = #{idEstadoEnvio}
     WHERE idEnvio = #{idEnvio}
+    
 </update>
 
 <select id="enviosPorConductor" parameterType="int" resultType="pojo.Envio">
     SELECT idEnvio, noGuia, costoEnvio, envio.idEstadoEnvio, estadoenvio.nombre AS 'estatus' FROM envio
     INNER JOIN estadoenvio ON estadoenvio.idEstadoEnvio = envio.idEstadoEnvio
-    WHERE idColaborador = #{idColaborador} AND isDeleted = 0
+    WHERE idColaborador = #{idColaborador}
+</select>
+
+<delete id="eliminar" parameterType="int">
+    DELETE FROM envio
+    WHERE idEnvio = #{idEnvio}
+</delete>
+
+
+
+    
+  
+<select id="obtenerEnvioPorNumGuia" parameterType="String" resultType="pojo.Envio">
+        SELECT noGuia, costoEnvio, idEstadoEnvio, idCliente, idColaborador, idDireccionDestino, idEnvio
+        FROM envio
+        WHERE noGuia = #{noGuia};
 </select>
 
 

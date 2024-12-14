@@ -99,4 +99,44 @@ public class WSColaboradores {
             throw new BadRequestException();
         }
     }
+    
+    @GET
+    @Path("comprobarEnvios/{idColaborador}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje comprobarEnvios(@PathParam("idColaborador") Integer idColaborador){
+        return ImpColaboradores.comprobarEnvios(idColaborador);
+    }
+    
+    @GET
+    @Path("asignarUnidad/{idColaborador}/{idUnidad}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje asignarUnidad(@PathParam("idColaborador") Integer idColaborador, @PathParam("idUnidad") Integer idUnidad){
+        if(idColaborador > 0 || idUnidad > 0){
+            return ImpColaboradores.asignarUnidad(idColaborador, idUnidad);
+        }else{
+            throw new BadRequestException();
+        }
+    }
+    
+    @GET
+    @Path("comprobarColaboradorUnidad/{idColaborador}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje comprobarColaboradorUnidad(@PathParam("idColaborador") Integer idColaborador){
+        if(idColaborador > 0){
+            return ImpColaboradores.comprobarColaboradorUnidad(idColaborador);
+        }else{
+            throw new BadRequestException();
+        }
+    }
+    
+    @DELETE
+    @Path("quitarAsignacionUnidad/{idColaborador}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje quitarAsignacionUnidad(@PathParam("idColaborador") Integer idColaborador){
+        if(idColaborador > 0){
+            return ImpColaboradores.quitarAsignacionUnidad(idColaborador);
+        }else{
+            throw new BadRequestException();
+        }
+    }
 }

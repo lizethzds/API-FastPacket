@@ -56,5 +56,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="comprobarLicencia" parameterType="String" resultType="String">
         SELECT numeroLicencia FROM colaborador WHERE numeroLicencia = #{noLicencia};
     </select>
+    
+    <select id="comprobarEnvios" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+        FROM Envio
+        WHERE idColaborador = #{idColaborador};
+    </select>
+    
+    <select id="comprobarColaboradorUnidad" parameterType="Integer" resultType="int">
+        SELECT COUNT(*)
+        FROM colaboradorUnidad
+        WHERE idColaborador = #{idColaborador};
+    </select>
+    
+    <select id="comprobarUnidadColaborador" parameterType="Integer" resultType="int">
+        SELECT COUNT(*)
+        FROM colaboradorUnidad
+        WHERE idUnidad = #{idUnidad};
+    </select>
+    
+    <insert id="asignarUnidad" parameterType="Integer">
+        INSERT INTO ColaboradorUnidad (idColaborador, idUnidad) 
+        VALUES (#{idColaborador},#{idUnidad})
+    </insert>
+    
+    <delete id="quitarAsignacionUnidad" parameterType="Integer">
+        delete from colaboradorUnidad where idColaborador = #{idColaborador};
+    </delete>
 </mapper>
 

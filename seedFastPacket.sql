@@ -74,20 +74,15 @@ VALUES
 
 INSERT INTO Envio (noGuia, costoEnvio, idEstadoEnvio, idCliente, idColaborador, idDireccionDestino)
 VALUES 
-('G12345', 150.50, 1, 1, 1, 2),
-('G23456', 200.00, 2, 2, 2, 3),
-('G34567', 175.75, 3, 3, 3, 4),
-('G45678', 100.25, 1, 4, 4, 5),
-('G56789', 250.00, 2, 5, 5, 1);
+('G12345', 150.50, 1, 1, 4, 2),
+('G23456', 200.00, 2, 2, 4, 3),
+('G34567', 175.75, 3, 3, 4, 4),
+('G45678', 100.25, 1, 4, 2, 5),
+('G56789', 250.00, 2, 5, 2, 1);
 
-
-INSERT INTO HistorialEnvio (idColaborador, idEnvio, comentario, horaModificacion, fechaModificacion, idEstadoEnvio)
+INSERT INTO HistorialEnvio (idColaborador, idEnvio, comentario, horaModificacion, idEstadoEnvio)
 VALUES 
-(1, 1, 101, current_time, current_date, 1),
-(2, 2, 102, current_time, current_date, 2),
-(3, 3, 103, current_time, current_date, 3),
-(4, 4, 104, current_time, current_date, 1),
-(5, 5, 105, current_time, current_date, 2);
+(1, 1, "Este es otro comentario", current_timestamp, 2);
 
 
 INSERT INTO HistorialEnvio (idColaborador, idEnvio, comentario, horaModificacion, fechaModificacion, idEstadoEnvio)
@@ -103,5 +98,5 @@ VALUES
 ('Paquete frágil', 2, 15, 20, 25, 4),
 ('Paquete voluminoso', 20, 50, 60, 70, 5);
 
-
+SELECT * FROM envio;
 

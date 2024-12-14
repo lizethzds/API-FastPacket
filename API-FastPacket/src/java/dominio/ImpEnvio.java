@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dominio;
 
 import java.util.List;
@@ -27,7 +23,19 @@ public class ImpEnvio {
         return envios;
     }
     
-    
+    public static Envio obtenerEnvioPorNumGuia(String noGuia){
+        Envio envio = null;
+        SqlSession conexionDB = MyBatisUtil.getSession();
+        if (conexionDB != null) {
+            try {
+                envio = conexionDB.selectOne("envios.obtenerEnvioPorNumGuia",noGuia);
+                conexionDB.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return envio;
+    }
     public static DatosRegistroEnvio obtenerEnvioPorId(Integer idEnvio){
         DatosRegistroEnvio envioSolicitado = new DatosRegistroEnvio();
         SqlSession conexionBD = MyBatisUtil.getSession();
@@ -105,13 +113,44 @@ public class ImpEnvio {
     }
     
     
+    public static Mensaje editarEstatusEnvio(Envio envioEstatus){
+    Mensaje msj = new Mensaje();
+    msj.setError(true);
+    SqlSession conexionBD = MyBatisUtil.getSession();
+    if(conexionBD != null){
+            try{
+                int filasAfectadas = conexionBD.update("envios.editarEstatus", envioEstatus);
+                conexionBD.commit();
+                
+                if(filasAfectadas>0){
+                    msj.setError(false);
+                    msj.setContenido("El estatus del envío ha sido actualizado");
+                }else{
+                msj.setContenido("Ha ocurrido un error al intentar actualizar el estatus del envío");
+                }
+                
+            }catch(Exception e){
+                msj.setContenido("Ocurrió un error al realizar el la acutalización.");
+                e.printStackTrace();
+                
+            }
+        }else{
+            msj.setContenido("No hay conexion con la BD");
+        }
+               
+    return msj;   
+    
+    
+    }
+    
+    
     public static Mensaje eliminarEnvio (Integer idEnvio){
         Mensaje msj = new Mensaje();
         msj.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
         
         if(conexionBD != null){
-            int filasAfectadas = conexionBD.update("envios.eliminarEnvio", idEnvio);
+            int filasAfectadas = conexionBD.delete("envios.eliminar", idEnvio);
             conexionBD.commit();
             if(filasAfectadas>0){
                 msj.setError(false);
