@@ -1,6 +1,7 @@
 
 package dominio;
 
+import java.util.List;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojo.HistorialEnvio;
@@ -42,4 +43,20 @@ public class ImpHistorial {
     
     }
     
+    public static List<HistorialEnvio> obtenerHistorialIdEnvio(int idEnvio){
+        List<HistorialEnvio> historialEnvio = null;
+        SqlSession conexionDB = MyBatisUtil.getSession();
+        if (conexionDB != null) {
+            try {
+                historialEnvio = conexionDB.selectList("historial.obtenerHistorialEnvio",idEnvio);
+                if (historialEnvio != null) {
+                    return historialEnvio;
+                }
+                conexionDB.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return historialEnvio;
+    }
 }

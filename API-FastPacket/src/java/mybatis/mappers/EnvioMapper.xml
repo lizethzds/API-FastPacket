@@ -196,7 +196,11 @@ WHERE
 
     
   
-    
+    <select id="obtenerEnvioPorNumGuia" parameterType="String" resultType="pojo.Envio">
+        SELECT noGuia, costoEnvio, idEstadoEnvio, idCliente, idColaborador, idDireccionDestino, idEnvio
+        FROM envio
+        WHERE noGuia = #{noGuia};
+    </select>
 
 
 </mapper>

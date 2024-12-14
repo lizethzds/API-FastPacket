@@ -27,7 +27,19 @@ public class ImpEnvio {
         return envios;
     }
     
-    
+    public static Envio obtenerEnvioPorNumGuia(String noGuia){
+        Envio envio = null;
+        SqlSession conexionDB = MyBatisUtil.getSession();
+        if (conexionDB != null) {
+            try {
+                envio = conexionDB.selectOne("envios.obtenerEnvioPorNumGuia",noGuia);
+                conexionDB.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return envio;
+    }
     public static DatosRegistroEnvio obtenerEnvioPorId(Integer idEnvio){
         DatosRegistroEnvio envioSolicitado = new DatosRegistroEnvio();
         SqlSession conexionBD = MyBatisUtil.getSession();

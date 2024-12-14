@@ -99,4 +99,11 @@ public class WSColaboradores {
             throw new BadRequestException();
         }
     }
+    
+    @GET
+    @Path("comprobarEnvios/{idColaborador}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje comprobarEnvios(@PathParam("idColaborador") Integer idColaborador){
+        return ImpColaboradores.comprobarEnvios(idColaborador);
+    }
 }

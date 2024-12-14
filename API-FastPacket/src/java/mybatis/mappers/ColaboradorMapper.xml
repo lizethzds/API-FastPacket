@@ -56,5 +56,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="comprobarLicencia" parameterType="String" resultType="String">
         SELECT numeroLicencia FROM colaborador WHERE numeroLicencia = #{noLicencia};
     </select>
+    
+    <select id="comprobarEnvios" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+        FROM Envio
+        WHERE idColaborador = #{idColaborador};
+    </select>
 </mapper>
 

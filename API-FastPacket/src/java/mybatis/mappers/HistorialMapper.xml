@@ -11,8 +11,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     VALUES (#{idColaborador}, #{comentario}, #{idEnvio}, #{idEstadoEnvio})
 </insert>
 
-
-    
+    <select id="obtenerHistorialEnvio" parameterType="int" resultType="pojo.HistorialEnvio">
+        SELECT horaModificacion, comentario, e.nombre as estatus
+        FROM HistorialEnvio h
+        INNER JOIN EstadoEnvio e ON h.idEstadoEnvio = e.idEstadoEnvio
+        WHERE h.idEnvio = #{idEnvio};
+    </select>
 
 
 </mapper>

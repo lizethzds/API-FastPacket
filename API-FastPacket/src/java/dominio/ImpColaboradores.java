@@ -179,4 +179,28 @@ public class ImpColaboradores {
         return respuesta;
     }
 
+    public static Mensaje comprobarEnvios(int idColaborador) {
+        Mensaje respuesta = new Mensaje();
+        respuesta.setError(true);
+
+        try (SqlSession conexionDB = MyBatisUtil.getSession()) {
+            if (conexionDB != null) {
+                int enviosAsignados = conexionDB.selectOne("colaborador.comprobarEnvios", idColaborador);
+                if(enviosAsignados > 0){
+                    String plural = enviosAsignados == 1 ? " envio" : " envios"; 
+                    respuesta.setContenido("El colaborador esta asignado a " + enviosAsignados + plural);
+                }else{
+                    respuesta.setContenido("El colaborador no cuenta con envios asignados");
+                }
+                respuesta.setError(false);
+            } else {
+                respuesta.setContenido("No fue posible establecer conexión con la base de datos.");
+            }
+        } catch (Exception e) {
+            respuesta.setContenido("Ocurrió un error al comprobar los valores: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return respuesta;
+    }
 }
