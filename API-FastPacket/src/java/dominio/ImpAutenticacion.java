@@ -23,6 +23,7 @@ public class ImpAutenticacion {
                 parametros.put("noPersonal", noPersonal);
                 parametros.put("password", password);
                 
+                System.err.println("noPersonal"+noPersonal+"  password"+password);
                 // Pasar parámetros a la consulta
                 Colaborador colaborador = conexionBD.selectOne("autenticacion.loginColaborador", parametros);
                 

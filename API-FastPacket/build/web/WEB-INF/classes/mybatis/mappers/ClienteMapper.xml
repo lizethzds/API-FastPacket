@@ -27,11 +27,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     d.colonia AS 'direccion.colonia',
     d.codigoPostal AS 'direccion.codigoPostal',
     d.idMunicipio AS 'direccion.idMunicipio'
-FROM 
-    cliente c
-INNER JOIN 
-    direccion d ON c.idDireccion = d.idDireccion
-WHERE 
+    FROM 
+        cliente c
+    INNER JOIN 
+        direccion d ON c.idDireccion = d.idDireccion
+    WHERE 
     c.idCliente = #{idCliente}
 
     </select>
@@ -55,7 +55,7 @@ WHERE
         #{error, mode=INOUT, jdbcType=VARCHAR}
     )}
     </insert>
-    
+        
   <update id="editar" parameterType="pojo.DatosRegistroCliente" statementType="CALLABLE">
     {CALL editarCliente(
         #{cliente.idCliente, mode=IN, jdbcType=INTEGER},
@@ -73,7 +73,6 @@ WHERE
         #{error, mode=INOUT, jdbcType=VARCHAR}
     )}
     </update>
-
     
    <delete id="eliminar" parameterType="int">
     DELETE FROM cliente
@@ -83,9 +82,5 @@ WHERE
         FROM envio
         WHERE idCliente = #{idCliente}
     )
-</delete>
-
-    
-
-
+    </delete>
 </mapper>

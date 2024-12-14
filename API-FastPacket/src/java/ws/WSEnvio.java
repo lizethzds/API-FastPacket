@@ -57,6 +57,17 @@ public class WSEnvio {
         }
     }
     
+    @Path("obtenerEnvioPorNoGuia/{noGuia}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Envio obtenerEnvioPorNumGuia(@PathParam("noGuia") String noGuia){
+        if(noGuia.contains("FP")){
+            return ImpEnvio.obtenerEnvioPorNumGuia(noGuia);
+        }else{
+          throw new BadRequestException();
+        }
+    }
+    
     
     @Path("registrar")
     @POST
