@@ -1,5 +1,7 @@
 package dominio;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -201,6 +203,110 @@ public class ImpColaboradores {
             e.printStackTrace();
         }
 
+        return respuesta;
+    }
+    
+    public static Mensaje asignarUnidad(Integer idColaborador, Integer idUnidad){
+        Mensaje respuesta = new Mensaje();
+        respuesta.setError(true);
+        SqlSession conexionDB = MyBatisUtil.getSession();
+        if (conexionDB != null) {
+            respuesta = comprobarAsignaciones(conexionDB, idColaborador, idUnidad);
+            if(!respuesta.isError()){
+                try {
+                    HashMap<String,Integer> parametros = new LinkedHashMap<>();
+                    parametros.put("idColaborador", idColaborador);
+                    parametros.put("idUnidad", idUnidad); 
+                    int filasAfectadas = conexionDB.insert("colaborador.asignarUnidad", parametros);
+                    conexionDB.commit();
+                    if (filasAfectadas > 0) {
+                        respuesta.setError(false);
+                        respuesta.setContenido("Colaborador asignado con exito");
+                        return respuesta;
+                    } else {
+                        respuesta.setContenido("El colaborador/unidad no existe");
+                    }
+                    conexionDB.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            respuesta.setContenido("Por el momento no es posible asignar colaboradores");
+        }
+        return respuesta;
+    }
+    
+    public static Mensaje comprobarAsignaciones(SqlSession conexionDB, Integer idColaborador, Integer idUnidad ){
+        Mensaje respuesta = new Mensaje();
+        respuesta.setError(true);
+        try{
+            int asignacionesColaborador = conexionDB.selectOne("colaborador.comprobarColaboradorUnidad",idColaborador);
+            if(asignacionesColaborador > 0){
+                respuesta.setContenido("El colaborador ya se encuentra asignado a una unidad");
+                return respuesta;
+            }
+            int asignacionesUnidad = conexionDB.selectOne("colaborador.comprobarUnidadColaborador",idUnidad);
+            if(asignacionesUnidad > 0){
+                respuesta.setContenido("La unidad ya se encuentra asignada a un colaborador");
+                return respuesta;
+            }
+        }catch(Exception e){
+            respuesta.setContenido("Error al asignar colaborador");
+            e.printStackTrace();
+        }
+        
+        respuesta.setError(false);
+        return respuesta;
+    }
+    
+    public static Mensaje comprobarColaboradorUnidad(Integer idColaborador){
+        Mensaje respuesta = new Mensaje();
+        respuesta.setError(true);
+        SqlSession conexionDB = MyBatisUtil.getSession();
+        if (conexionDB != null) {
+            int asignacionesColaborador = conexionDB.selectOne("colaborador.comprobarColaboradorUnidad",idColaborador);
+            if(asignacionesColaborador <= 0){
+                respuesta.setContenido("El colaborador no se encuentra asignado a una unidad");
+                respuesta.setError(false);
+                return respuesta;
+            }else{
+               respuesta.setContenido("El colaborador ya se encuentra asignado a una unidad"); 
+            }
+        } else {
+            respuesta.setContenido("Por el momento no es posible asignar colaboradores");
+        }
+        return respuesta;
+    }
+    
+    
+    public static Mensaje quitarAsignacionUnidad(Integer idColaborador){
+        Mensaje respuesta = new Mensaje();
+        respuesta.setError(true);
+        SqlSession conexionDB = MyBatisUtil.getSession();
+        if (conexionDB != null) {
+                Mensaje validacion = comprobarColaboradorUnidad(idColaborador);
+                if(validacion.isError()){
+                    try {
+                        int filasAfectadas = conexionDB.delete("colaborador.quitarAsignacionUnidad", idColaborador);
+                        conexionDB.commit();
+                        if (filasAfectadas > 0) {
+                            respuesta.setError(false);
+                            respuesta.setContenido("La asignación del colaborador fue eliminada  con exito");
+                            return respuesta;
+                        } else {
+                            respuesta.setContenido("El colaborador/unidad no existe");
+                        }
+                        conexionDB.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    respuesta.setContenido("El colaborador no se encuentra asignado a ninguna unidad,\n"
+                            + " por favor asigne una uniadad para poder realizar la transacción");
+                }
+                
+            }
         return respuesta;
     }
 }
