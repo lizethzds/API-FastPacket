@@ -186,7 +186,7 @@ WHERE
     
 </update>
 
-<update id="editarEstatus" parameterType="pojo.Envio">
+<update id="editarEstatus" parameterType="pojo.HistorialEnvio">
     UPDATE envio 
     SET idEstadoEnvio = #{idEstadoEnvio}
     WHERE idEnvio = #{idEnvio}

@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import pojo.DatosRegistroEnvio;
 import pojo.Direccion;
 import pojo.Envio;
+import pojo.HistorialEnvio;
 import pojo.Mensaje;
 
 /**
@@ -129,9 +130,9 @@ public class WSEnvio {
             throw new BadRequestException();
         }else{
         Gson gson = new Gson();
-        Envio envio = gson.fromJson(json, Envio.class);
-        
-        msj =  ImpEnvio.editarEstatusEnvio(envio);
+            HistorialEnvio envio = gson.fromJson(json, HistorialEnvio.class);
+            System.out.println(envio.toString());
+            msj =  ImpEnvio.editarEstatusEnvio(envio);
        
         }
         return msj;

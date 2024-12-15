@@ -6,6 +6,7 @@ import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojo.DatosRegistroEnvio;
 import pojo.Envio;
+import pojo.HistorialEnvio;
 import pojo.Mensaje;
 
 /**
@@ -113,7 +114,7 @@ public class ImpEnvio {
     }
     
     
-    public static Mensaje editarEstatusEnvio(Envio envioEstatus){
+    public static Mensaje editarEstatusEnvio(HistorialEnvio envioEstatus){
     Mensaje msj = new Mensaje();
     msj.setError(true);
     SqlSession conexionBD = MyBatisUtil.getSession();
@@ -121,10 +122,11 @@ public class ImpEnvio {
             try{
                 int filasAfectadas = conexionBD.update("envios.editarEstatus", envioEstatus);
                 conexionBD.commit();
-                
                 if(filasAfectadas>0){
                     msj.setError(false);
                     msj.setContenido("El estatus del envío ha sido actualizado");
+                    Mensaje historial = new Mensaje();
+                    historial = ImpHistorial.guardarRegistroCambios(envioEstatus);
                 }else{
                 msj.setContenido("Ha ocurrido un error al intentar actualizar el estatus del envío");
                 }
