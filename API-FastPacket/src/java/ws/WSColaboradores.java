@@ -151,4 +151,15 @@ public class WSColaboradores {
             throw new BadRequestException();
         }
     }
+    
+    
+    @Path("subirFoto/{idColaborador}")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje subirFoto(@PathParam("idColaborador")Integer idColaborador,byte[] foto){
+        if(idColaborador != null && idColaborador > 0 && foto.length > 0){
+           return ImpColaboradores.guardarFoto(idColaborador, foto);
+        }
+        throw new BadRequestException();
+    }
 }

@@ -90,5 +90,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         inner join Unidad u ON u.idUnidad = cu.idUnidad
         where idColaborador = #{idColaborador};
     </select>
+    
+    <update id="guardarFoto" parameterType="map">
+        UPDATE colaborador
+        SET fotografia =  TO_BASE64(#{fotografia})
+        where idColaborador = #{idColaborador};
+    </update>
 </mapper>
 
