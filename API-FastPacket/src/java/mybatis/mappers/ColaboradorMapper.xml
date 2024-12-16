@@ -83,5 +83,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="quitarAsignacionUnidad" parameterType="Integer">
         delete from colaboradorUnidad where idColaborador = #{idColaborador};
     </delete>
+    
+    <select id="obtenerUnidad" parameterType="int" resultType="pojo.Unidad">
+        select marca, modelo, anio, vin, noIdentificacion, idTipoUnidad, cu.idUnidad
+        from colaboradorUnidad cu
+        inner join Unidad u ON u.idUnidad = cu.idUnidad
+        where idColaborador = #{idColaborador};
+    </select>
 </mapper>
 

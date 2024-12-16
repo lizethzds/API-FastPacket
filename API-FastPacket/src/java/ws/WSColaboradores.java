@@ -20,6 +20,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import pojo.Colaborador;
 import pojo.Mensaje;
+import pojo.Unidad;
 
 /**
  *
@@ -135,6 +136,17 @@ public class WSColaboradores {
     public Mensaje quitarAsignacionUnidad(@PathParam("idColaborador") Integer idColaborador){
         if(idColaborador > 0){
             return ImpColaboradores.quitarAsignacionUnidad(idColaborador);
+        }else{
+            throw new BadRequestException();
+        }
+    }
+    
+    @GET
+    @Path("obtenerUnidad/{idColaborador}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Unidad obtenerUnidad(@PathParam("idColaborador") Integer idColaborador){
+        if(idColaborador > 0){
+            return ImpColaboradores.obtenerUnidad(idColaborador);
         }else{
             throw new BadRequestException();
         }
