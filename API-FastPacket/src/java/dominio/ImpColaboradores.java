@@ -7,6 +7,7 @@ import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojo.Colaborador;
 import pojo.Mensaje;
+import pojo.Unidad;
 
 public class ImpColaboradores {
 
@@ -309,4 +310,45 @@ public class ImpColaboradores {
             }
         return respuesta;
     }
+    
+    
+    public static Unidad obtenerUnidad(int idColaborador){
+        Unidad respuesta = null;
+        SqlSession conexionDB = MyBatisUtil.getSession();
+        if (conexionDB != null) {
+            Unidad unidad = conexionDB.selectOne("colaborador.obtenerUnidad",idColaborador);
+            if(unidad !=  null){
+                return unidad;
+            }
+        }
+        return respuesta;
+    }
+    
+    public static Mensaje guardarFoto(Integer idCliente, byte[] foto){
+        Mensaje respuesta = new Mensaje();
+        respuesta.setError(true);
+        SqlSession conexionDB = MyBatisUtil.getSession();
+        if(conexionDB != null){
+            try {
+                HashMap<String,Object> parametros = new LinkedHashMap<>();
+                parametros.put("idColaborador", idCliente);
+                parametros.put("fotografia", foto);
+                int filasAfectadas = conexionDB.update("colaborador.guardarFoto",parametros);              
+                conexionDB.commit();
+                if(filasAfectadas >= 1){
+                   respuesta.setError(false);
+                   respuesta.setContenido(" La Fotografia del colaborador se ha guardado correctamente");
+               }else{
+                   respuesta.setContenido("La foto del colaborador no pudo ser agregada");
+               }
+                conexionDB.close();
+            } catch (Exception e) {
+                respuesta.setContenido(e.getMessage());
+            }
+        }else{
+            respuesta.setContenido("Por el momento no es posible modificar colaboradoress ");
+        }
+        return respuesta;
+    }
+    
 }
