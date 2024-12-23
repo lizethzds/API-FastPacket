@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT idCliente, nombre, apellidoPaterno, apellidoMaterno,
         correo, telefono, idDireccion
         FROM cliente
+        WHERE isDeleted = 0
     </select>
     
     <select id="obtenerDatosCliente" resultType="pojo.DatosRegistroCliente" parameterType="int">
@@ -74,13 +75,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     )}
     </update>
     
-   <delete id="eliminar" parameterType="int">
-    DELETE FROM cliente
+  <update id="eliminarCliente" parameterType="int">
+    UPDATE cliente
+    SET isDeleted = 1
     WHERE idCliente = #{idCliente}
     AND NOT EXISTS (
         SELECT 1
         FROM envio
         WHERE idCliente = #{idCliente}
+        AND isDeleted = 0
     )
-    </delete>
+</update>
+
 </mapper>

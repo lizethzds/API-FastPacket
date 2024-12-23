@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ws;
 
 import com.google.gson.Gson;
 import dominio.ImpCliente;
 import java.util.List;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -111,17 +108,18 @@ public class WSCliente {
    
    
    
+
+   
+   
    @DELETE
    @Path("eliminar/{idCliente}")
    @Produces(MediaType.APPLICATION_JSON)
    public Mensaje eliminarCliente (@PathParam("idCliente") Integer idCliente){
-   
-       if(idCliente>0){
+       if(idCliente > 0 && idCliente != null){
            return ImpCliente.eliminarCliente(idCliente);
        }else{
-           throw new WebApplicationException(Response.Status.BAD_REQUEST);
+           throw new BadRequestException();
        }
-       
    }
    
     

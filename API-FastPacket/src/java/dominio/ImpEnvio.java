@@ -152,7 +152,7 @@ public class ImpEnvio {
         SqlSession conexionBD = MyBatisUtil.getSession();
         
         if(conexionBD != null){
-            int filasAfectadas = conexionBD.delete("envios.eliminar", idEnvio);
+            int filasAfectadas = conexionBD.update("envios.eliminarEnvio", idEnvio);
             conexionBD.commit();
             if(filasAfectadas>0){
                 msj.setError(false);
