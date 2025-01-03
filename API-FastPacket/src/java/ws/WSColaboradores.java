@@ -20,6 +20,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import pojo.Colaborador;
 import pojo.Mensaje;
+import pojo.RegistroColaboradorUnidad;
 import pojo.Unidad;
 
 /**
@@ -34,6 +35,13 @@ public class WSColaboradores {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Colaborador> obtenerColaboradores(){
         return ImpColaboradores.obtenerColaboradores();
+    }
+    
+    @GET
+    @Path("obtenerConductores")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Colaborador> obtenerConductores(){
+        return ImpColaboradores.obtenerConductores();
     }
     
     @GET
@@ -107,51 +115,18 @@ public class WSColaboradores {
     public Mensaje comprobarEnvios(@PathParam("idColaborador") Integer idColaborador){
         return ImpColaboradores.comprobarEnvios(idColaborador);
     }
-    
+        
     @GET
-    @Path("asignarUnidad/{idColaborador}/{idUnidad}")
+    @Path("comprobarColaboradorUnidad/{idColaborador}/{idUnidad}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje asignarUnidad(@PathParam("idColaborador") Integer idColaborador, @PathParam("idUnidad") Integer idUnidad){
-        if(idColaborador > 0 || idUnidad > 0){
-            return ImpColaboradores.asignarUnidad(idColaborador, idUnidad);
-        }else{
-            throw new BadRequestException();
-        }
-    }
-    
-    @GET
-    @Path("comprobarColaboradorUnidad/{idColaborador}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje comprobarColaboradorUnidad(@PathParam("idColaborador") Integer idColaborador){
+    public Mensaje comprobarColaboradorUnidad(@PathParam("idColaborador") Integer idColaborador,
+                                              @PathParam("idUnidad") Integer idUnidad){
         if(idColaborador > 0){
-            return ImpColaboradores.comprobarColaboradorUnidad(idColaborador);
+            return ImpColaboradores.comprobarColaboradorUnidad(idColaborador,idUnidad);
         }else{
             throw new BadRequestException();
         }
     }
-    
-    @DELETE
-    @Path("quitarAsignacionUnidad/{idColaborador}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Mensaje quitarAsignacionUnidad(@PathParam("idColaborador") Integer idColaborador){
-        if(idColaborador > 0){
-            return ImpColaboradores.quitarAsignacionUnidad(idColaborador);
-        }else{
-            throw new BadRequestException();
-        }
-    }
-    
-    @GET
-    @Path("obtenerUnidad/{idColaborador}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Unidad obtenerUnidad(@PathParam("idColaborador") Integer idColaborador){
-        if(idColaborador > 0){
-            return ImpColaboradores.obtenerUnidad(idColaborador);
-        }else{
-            throw new BadRequestException();
-        }
-    }
-    
     
     @Path("subirFoto/{idColaborador}")
     @PUT
@@ -162,4 +137,50 @@ public class WSColaboradores {
         }
         throw new BadRequestException();
     }
+    
+    @GET
+    @Path("obtenerAsignacionesUnidades")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Unidad> obtenerAsignacionesUnidades(){
+        return ImpColaboradores.obtenerUnidadesPorAsignacion();
+    }
+    
+    
+    @GET
+    @Path("obtenerAsignacionesColaboradores")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Colaborador> obtenerAsignacionesColaboradores(){
+        return ImpColaboradores.obtenerColaboradoresPorAsignacion();
+    }
+    
+    @GET
+    @Path("obtenerRegistrosColaboradorUnidad")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<RegistroColaboradorUnidad> obtenerRegistrosColaboradorUnidad(){
+        return ImpColaboradores.obtenerRegistrosColaboradorUnidad();
+    }  
+    
+    @POST
+    @Path("asignarUnidad/{idColaborador}/{idUnidad}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje asignarUnidad(@PathParam("idColaborador") Integer idColaborador, @PathParam("idUnidad") Integer idUnidad){
+        if(idColaborador > 0 && idUnidad > 0){
+            return ImpColaboradores.asignarUnidad(idColaborador, idUnidad);
+        }else{
+            throw new BadRequestException();
+        }
+    }
+    
+    @DELETE
+    @Path("quitarAsignacionUnidad/{idColaborador}/{idUnidad}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje quitarAsignacionUnidad(@PathParam("idColaborador") Integer idColaborador,
+                                          @PathParam("idUnidad") Integer idUnidad){
+        if(idColaborador > 0 && idUnidad >0){
+            return ImpColaboradores.quitarAsignacionUnidad(idColaborador,idUnidad);
+        }else{
+            throw new BadRequestException();
+        }
+    }
+    
 }
