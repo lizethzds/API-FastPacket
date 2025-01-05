@@ -119,7 +119,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ColaboradorUnidad cu ON cu.idUnidad = u.idUnidad
         JOIN 
             TipoUnidad tu ON u.idTipoUnidad = tu.idTipoUnidad
-        WHERE idDeleted = 0;
+        WHERE u.activo = true
     </select>
     
     <select id="obtenerAsignacionesColaborador" resultType="pojo.Colaborador">
