@@ -8,21 +8,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="colaboradores" resultType="pojo.Colaborador">
         SELECT idColaborador, c.nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp,
 		password, c.idRol, r.nombre AS rol,numeroLicencia AS noLicencia
-        FROM colaborador c
+        FROM Colaborador c
         INNER JOIN rol r ON c.idRol = r.idRol
     </select>
     
     <select id="conductores" resultType="pojo.Colaborador">
         SELECT idColaborador, nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp,
                 idRol ,numeroLicencia AS noLicencia
-        FROM colaborador
+        FROM Colaborador
         WHERE idRol = 3
     </select>
         
     <select id="colaboradorPorNoPersonal" resultType="pojo.Colaborador" parameterType="String">
         SELECT idColaborador, c.nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp,
 		password, c.idRol, r.nombre AS rol, numeroLicencia AS noLicencia
-        FROM colaborador c
+        FROM Colaborador c
         INNER JOIN rol r ON c.idRol = r.idRol
         WHERE noPersonal = #{noPersonal}
     </select>
@@ -118,7 +118,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         LEFT JOIN 
             ColaboradorUnidad cu ON cu.idUnidad = u.idUnidad
         JOIN 
-            TipoUnidad tu ON u.idTipoUnidad = tu.idTipoUnidad; 
+            TipoUnidad tu ON u.idTipoUnidad = tu.idTipoUnidad
+        WHERE idDeleted = 0;
     </select>
     
     <select id="obtenerAsignacionesColaborador" resultType="pojo.Colaborador">

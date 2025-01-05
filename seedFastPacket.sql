@@ -49,6 +49,11 @@ VALUES
 ('Jorge', 'Mendoza', 'Ruiz', '2291234567', 'jorge.mendoza@example.com', 4),
 ('Lucía', 'Martínez', 'Fernández', '9991234567', 'lucia.martinez@example.com', NULL);
 
+-- colaborador placeholder
+-- INSERT INTO Colaborador (nombre, apellidoPaterno, apellidoMaterno, curp, correo, noPersonal, password, idRol, fotografia, numeroLicencia)
+-- VALUES 
+-- ('Example', 'Example', 'Example', 'JYIZ731017MTSIKB50', 'example@example.com', 'NP000', 'password123', 3, NULL, 122311212);
+
 INSERT INTO Colaborador (nombre, apellidoPaterno, apellidoMaterno, curp, correo, noPersonal, password, idRol, fotografia, numeroLicencia)
 VALUES 
 ('Juan', 'Pérez', 'Gómez', 'PEHJ890101HDFRNS01', 'juan.perez@example.com', 'NP001', 'password123', 1, NULL, NULL),
@@ -80,19 +85,19 @@ VALUES
 
 INSERT INTO Envio (noGuia, costoEnvio, idEstadoEnvio, idCliente, idColaborador, idDireccionDestino)
 VALUES 
-('FP123456', 150.50, 1, NULL, 4, 2),
-('FP234567', 200.00, 2, NULL, 4, 3),
-('FP345678', 175.75, 3, NULL, 4, 4),
-('FP456789', 100.25, 1, NULL, 2, 5),
-('FP567890', 250.00, 2, NULL, 2, 1);
+('FP123456', 150.50, 1, 2, 4, 2),
+('FP234567', 200.00, 2, 3, 4, 3),
+('FP345678', 175.75, 3, 4, 4, 4),
+('FP456789', 100.25, 1, 5, 2, 5),
+('FP567890', 250.00, 2, 1, 2, 1);
 
 INSERT INTO HistorialEnvio (idColaborador, idEnvio, comentario, idEstadoEnvio)
 VALUES 
-(1, 1, "Paquete en tránsito", 2),
-(2, 3, "Entregado sin contratiempos", 3),
+(4, 1, "Paquete en tránsito", 2),
+(4, 3, "Entregado sin contratiempos", 3),
 (4, 5, "Requiere revisión adicional", 1),
-(5, 2, "Retraso por clima", 2),
-(3, 4, "Paquete cancelado por remitente", 4);
+(2, 2, "Retraso por clima", 2),
+(2, 4, "Paquete cancelado por remitente", 4);
 
 INSERT INTO Paquete (descripcion, peso, altura, ancho, profundidad, idEnvio)
 VALUES 
@@ -101,3 +106,5 @@ VALUES
 ('Paquete grande', 10, 30, 35, 40, 3),
 ('Paquete frágil', 2, 15, 20, 25, 4),
 ('Paquete voluminoso', 20, 50, 60, 70, 5);
+
+select * from Envio;

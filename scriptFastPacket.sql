@@ -20,6 +20,7 @@ CREATE TABLE Colaborador (
   nombre VARCHAR(255),
   apellidoPaterno VARCHAR(255),
   apellidoMaterno VARCHAR(255),
+  numeroLicencia varchar(20) UNIQUE,
   curp VARCHAR(18) UNIQUE,
   correo VARCHAR(255),
   noPersonal VARCHAR(255),
@@ -34,6 +35,7 @@ CREATE TABLE TipoUnidad (
   tipo VARCHAR(255)
 );
 
+-- activo debe tener valor default 1 
 CREATE TABLE Unidad (
   idUnidad INT PRIMARY KEY AUTO_INCREMENT,
   marca VARCHAR(255),
@@ -42,6 +44,8 @@ CREATE TABLE Unidad (
   vin VARCHAR(255) UNIQUE,
   noIdentificacion VARCHAR(255),
   idTipoUnidad INT,
+  activo TINYINT DEFAULT 1 NOT NULL,
+  motivo VARCHAR(255),
   FOREIGN KEY (idTipoUnidad) REFERENCES TipoUnidad(idTipoUnidad)
 );
 
@@ -49,7 +53,6 @@ CREATE TABLE ColaboradorUnidad (
   idColaboradorUnidad INT PRIMARY KEY AUTO_INCREMENT,
   idUnidad INT,
   idColaborador INT,
-  numeroLicencia Varchar(20),
   FOREIGN KEY (idUnidad) REFERENCES Unidad(idUnidad),
   FOREIGN KEY (idColaborador) REFERENCES Colaborador(idColaborador)
 );
@@ -101,19 +104,20 @@ CREATE TABLE Envio (
   idCliente INT,
   idColaborador INT,
   idDireccionDestino INT,
+  isDeleted TINYINT DEFAULT 0 NOT NULL,
   FOREIGN KEY (idEstadoEnvio) REFERENCES EstadoEnvio(idEstadoEnvio),
   FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
   FOREIGN KEY (idColaborador) REFERENCES Colaborador(idColaborador),
   FOREIGN KEY (idDireccionDestino) REFERENCES Direccion(idDireccion)
 );
 
+-- horaModificacion tiene CURRENT TIMESTAMP como default expression
 CREATE TABLE HistorialEnvio (
   idHistorial INT PRIMARY KEY AUTO_INCREMENT,
   idColaborador INT,
   idEnvio INT,
   comentario varchar(500),
-  horaModificacion TIMESTAMP,
-  fechaModificacion DATE,
+  horaModificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   idEstadoEnvio INT,
   FOREIGN KEY (idColaborador) REFERENCES Colaborador(idColaborador),
   FOREIGN KEY (idEnvio) REFERENCES Envio(idEnvio),
@@ -123,11 +127,11 @@ CREATE TABLE HistorialEnvio (
 CREATE TABLE Paquete (
   idPaquete INT PRIMARY KEY AUTO_INCREMENT,
   descripcion VARCHAR(255),
-  peso INT,
+  peso FLOAT,
   altura INT,
   ancho INT,
-  alto VARCHAR(255),
-  idEnvio INT,
+  profundidad INT,
+  idEnvio INT NOT NULL,
   FOREIGN KEY (idEnvio) REFERENCES Envio(idEnvio)
 );
 
@@ -135,31 +139,8 @@ DELIMITER $$
 
 CREATE PROCEDURE eliminarColaborador(IN colaboradorID INT)
 BEGIN
-    DECLARE envioAsignado INT;
-
-    SELECT COUNT(*) INTO envioAsignado
-    FROM Envio
-    WHERE idColaborador = colaboradorID;
-
-	INSERT INTO HistorialEnvio (
-		idColaborador, idEnvio, comentario, horaModificacion, fechaModificacion, idEstadoEnvio
-	)
-    SELECT colaboradorID, idEnvio, 
-		'El colaborador fue despedido en el trayecto, pronto se le asignará otro', 
-		CURRENT_TIMESTAMP, CURDATE(), 2
-	FROM Envio
-	WHERE idColaborador = colaboradorID;
-
-	UPDATE Envio 
-	SET idColaborador = NULL, idEstadoEnvio = 3
-	WHERE idColaborador = colaboradorID;
-
-    DELETE FROM HistorialEnvio WHERE idColaborador = colaboradorID;
-
     DELETE FROM ColaboradorUnidad WHERE idColaborador = colaboradorID;
-
     DELETE FROM Colaborador WHERE idColaborador = colaboradorID;
 END$$
 
 DELIMITER ;
-
