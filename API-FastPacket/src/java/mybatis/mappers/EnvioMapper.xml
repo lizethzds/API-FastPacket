@@ -194,8 +194,11 @@ WHERE
 </update>
 
 <select id="enviosPorConductor" parameterType="int" resultType="pojo.Envio">
-    SELECT idEnvio, noGuia, costoEnvio, envio.idEstadoEnvio, estadoenvio.nombre AS 'estatus' FROM envio
-    INNER JOIN estadoenvio ON estadoenvio.idEstadoEnvio = envio.idEstadoEnvio
+    SELECT idEnvio, noGuia, costoEnvio, envio.idEstadoEnvio, estadoenvio.nombre AS 'estatus', 
+    CONCAT(direccion.calle,' ', direccion.numero, ' ',direccion.colonia, ' ',direccion.ciudad, ' ',direccion.codigoPostal) AS 'direccion' 
+    FROM envio 
+    INNER JOIN estadoenvio ON estadoenvio.idEstadoEnvio = envio.idEstadoEnvio 
+    INNER JOIN direccion ON direccion.idDireccion = idDireccionDestino 
     WHERE idColaborador = #{idColaborador}
 </select>
 

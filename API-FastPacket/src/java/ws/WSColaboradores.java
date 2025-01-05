@@ -20,6 +20,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import pojo.Colaborador;
 import pojo.Mensaje;
+import pojo.Unidad;
 
 /**
  *
@@ -138,5 +139,27 @@ public class WSColaboradores {
         }else{
             throw new BadRequestException();
         }
+    }
+    
+    @GET
+    @Path("obtenerUnidad/{idColaborador}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Unidad obtenerUnidad(@PathParam("idColaborador") Integer idColaborador){
+        if(idColaborador > 0){
+            return ImpColaboradores.obtenerUnidad(idColaborador);
+        }else{
+            throw new BadRequestException();
+        }
+    }
+    
+    
+    @Path("subirFoto/{idColaborador}")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Mensaje subirFoto(@PathParam("idColaborador")Integer idColaborador,byte[] foto){
+        if(idColaborador != null && idColaborador > 0 && foto.length > 0){
+           return ImpColaboradores.guardarFoto(idColaborador, foto);
+        }
+        throw new BadRequestException();
     }
 }

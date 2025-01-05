@@ -17,7 +17,10 @@ VALUES
 ('Nuevo León'),
 ('Ciudad de México'),
 ('Veracruz'),
-('Yucatán');
+('Yucatán'),
+('Puebla'),
+('Querétaro'),
+('Chiapas');
 
 INSERT INTO Municipio (nombre, idEstado)
 VALUES 
@@ -25,7 +28,10 @@ VALUES
 ('Monterrey', 2),
 ('Cuauhtémoc', 3),
 ('Veracruz', 4),
-('Mérida', 5);
+('Mérida', 5),
+('Puebla', 6),
+('Querétaro', 7),
+('Tuxtla Gutiérrez', 8);
 
 INSERT INTO Direccion (calle, numero, colonia, ciudad, codigoPostal, idMunicipio)
 VALUES 
@@ -38,18 +44,18 @@ VALUES
 INSERT INTO Cliente (nombre, apellidoPaterno, apellidoMaterno, telefono, correo, idDireccion)
 VALUES 
 ('Pedro', 'Ramírez', 'Díaz', '3312345678', 'pedro.ramirez@example.com', 1),
-('Laura', 'Gómez', 'Torres', '8112345678', 'laura.gomez@example.com', 2),
-('Sofía', 'Hernández', 'Pérez', '5512345678', 'sofia.hernandez@example.com', 3),
+('Laura', 'Gómez', 'Torres', '8112345678', 'laura.gomez@example.com', NULL),
+('Sofía', 'Hernández', 'Pérez', '5512345678', 'sofia.hernandez@example.com', NULL),
 ('Jorge', 'Mendoza', 'Ruiz', '2291234567', 'jorge.mendoza@example.com', 4),
-('Lucía', 'Martínez', 'Fernández', '9991234567', 'lucia.martinez@example.com', 5);
+('Lucía', 'Martínez', 'Fernández', '9991234567', 'lucia.martinez@example.com', NULL);
 
 INSERT INTO Colaborador (nombre, apellidoPaterno, apellidoMaterno, curp, correo, noPersonal, password, idRol, fotografia, numeroLicencia)
 VALUES 
-('Juan', 'Pérez', 'Gómez', 'CURP12345678901234', 'juan.perez@example.com', 'NP001', 'password123', 1, NULL,NULL),
-('Ana', 'López', 'Martínez', 'CURP23456789012345', 'ana.lopez@example.com', 'NP002', 'password123', 3, NULL,1002),
-('Luis', 'Hernández', 'Sánchez', 'CURP34567890123456', 'luis.hernandez@example.com', 'NP003', 'password123', 1, NULL,NULL),
-('María', 'García', 'Flores', 'CURP45678901234567', 'maria.garcia@example.com', 'NP004', 'password123', 3, NULL, 1001),
-('Carlos', 'Rodríguez', 'Luna', 'CURP56789012345678', 'carlos.rodriguez@example.com', 'NP005', 'password123', 2, NULL,NULL);
+('Juan', 'Pérez', 'Gómez', 'PEHJ890101HDFRNS01', 'juan.perez@example.com', 'NP001', 'password123', 1, NULL, NULL),
+('Ana', 'López', 'Martínez', 'LOMA920202MJCRLN02', 'ana.lopez@example.com', 'NP002', 'password123', 3, NULL, 1002),
+('Luis', 'Hernández', 'Sánchez', 'HESL850303HGRRLN03', 'luis.hernandez@example.com', 'NP003', 'password123', 1, NULL, NULL),
+('María', 'García', 'Flores', 'GAFL910404MJCRLN04', 'maria.garcia@example.com', 'NP004', 'password123', 3, NULL, 1001),
+('Carlos', 'Rodríguez', 'Luna', 'ROLU880505HDFRNR05', 'carlos.rodriguez@example.com', 'NP005', 'password123', 2, NULL, NULL);
 
 INSERT INTO TipoUnidad (tipo)
 VALUES 
@@ -74,15 +80,19 @@ VALUES
 
 INSERT INTO Envio (noGuia, costoEnvio, idEstadoEnvio, idCliente, idColaborador, idDireccionDestino)
 VALUES 
-('G12345', 150.50, 1, 1, 4, 2),
-('G23456', 200.00, 2, 2, 4, 3),
-('G34567', 175.75, 3, 3, 4, 4),
-('G45678', 100.25, 1, 4, 2, 5),
-('G56789', 250.00, 2, 5, 2, 1);
+('FP123456', 150.50, 1, NULL, 4, 2),
+('FP234567', 200.00, 2, NULL, 4, 3),
+('FP345678', 175.75, 3, NULL, 4, 4),
+('FP456789', 100.25, 1, NULL, 2, 5),
+('FP567890', 250.00, 2, NULL, 2, 1);
 
-INSERT INTO HistorialEnvio (idColaborador, idEnvio, comentario, horaModificacion, idEstadoEnvio)
+INSERT INTO HistorialEnvio (idColaborador, idEnvio, comentario, idEstadoEnvio)
 VALUES 
-(1, 1, "Este es otro comentario", current_timestamp, 2);
+(1, 1, "Paquete en tránsito", 2),
+(2, 3, "Entregado sin contratiempos", 3),
+(4, 5, "Requiere revisión adicional", 1),
+(5, 2, "Retraso por clima", 2),
+(3, 4, "Paquete cancelado por remitente", 4);
 
 
 INSERT INTO HistorialEnvio (idColaborador, idEnvio, comentario, horaModificacion, fechaModificacion, idEstadoEnvio)
@@ -97,6 +107,3 @@ VALUES
 ('Paquete grande', 10, 30, 35, 40, 3),
 ('Paquete frágil', 2, 15, 20, 25, 4),
 ('Paquete voluminoso', 20, 50, 60, 70, 5);
-
-SELECT * FROM envio;
-
