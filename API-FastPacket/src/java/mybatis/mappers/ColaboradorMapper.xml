@@ -12,6 +12,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INNER JOIN rol r ON c.idRol = r.idRol
     </select>
     
+    <select id="conductores" resultType="pojo.Colaborador">
+        SELECT idColaborador, nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp,
+                idRol ,numeroLicencia AS noLicencia
+        FROM colaborador
+        WHERE idRol = 3
+    </select>
+        
     <select id="colaboradorPorNoPersonal" resultType="pojo.Colaborador" parameterType="String">
         SELECT idColaborador, c.nombre, apellidoPaterno, apellidoMaterno, noPersonal, correo, curp,
 		password, c.idRol, r.nombre AS rol, numeroLicencia AS noLicencia
@@ -63,16 +70,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE idColaborador = #{idColaborador};
     </select>
     
-    <select id="comprobarColaboradorUnidad" parameterType="Integer" resultType="int">
-        SELECT COUNT(*)
-        FROM colaboradorUnidad
-        WHERE idColaborador = #{idColaborador};
+    <select id="comprobarUnidadColaborador" parameterType="int" resultType="pojo.Colaborador">
+        SELECT c.idColaborador, c.noPersonal 
+        FROM colaboradorUnidad cu 
+        JOIN colaborador c ON cu.idColaborador = c.idColaborador
+        WHERE cu.idUnidad = #{idUnidad};
     </select>
     
-    <select id="comprobarUnidadColaborador" parameterType="Integer" resultType="int">
-        SELECT COUNT(*)
-        FROM colaboradorUnidad
-        WHERE idUnidad = #{idUnidad};
+    <select id="comprobarColaboradorUnidad" parameterType="int" resultType="pojo.Unidad">
+        SELECT u.idUnidad, u.vin 
+        FROM colaboradorUnidad cu 
+        JOIN unidad u ON cu.idUnidad = u.idUnidad
+        WHERE cu.idColaborador = #{idColaborador};
     </select>
     
     <insert id="asignarUnidad" parameterType="Integer">
@@ -80,8 +89,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         VALUES (#{idColaborador},#{idUnidad})
     </insert>
     
-    <delete id="quitarAsignacionUnidad" parameterType="Integer">
+    <delete id="quitarAsignacionColaborador" parameterType="Integer">
         delete from colaboradorUnidad where idColaborador = #{idColaborador};
+    </delete>
+    
+    <delete id="quitarAsignacionUnidad" parameterType="Integer">
+        delete from colaboradorUnidad where idUnidad = #{idUnidad};
     </delete>
     
     <select id="obtenerUnidad" parameterType="int" resultType="pojo.Unidad">
@@ -96,5 +109,78 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SET fotografia =  TO_BASE64(#{fotografia})
         where idColaborador = #{idColaborador};
     </update>
+    
+    <select id="obtenerAsignacionesUnidad" resultType="pojo.Unidad">
+        SELECT u.idUnidad, u.marca, u.modelo, u.anio, u.vin, u.noIdentificacion, tu.tipo AS tipoUnidad,
+            IF(cu.idUnidad IS NOT NULL, true, false) AS asignada
+        FROM 
+            Unidad u
+        LEFT JOIN 
+            ColaboradorUnidad cu ON cu.idUnidad = u.idUnidad
+        JOIN 
+            TipoUnidad tu ON u.idTipoUnidad = tu.idTipoUnidad; 
+    </select>
+    
+    <select id="obtenerAsignacionesColaborador" resultType="pojo.Colaborador">
+        SELECT c.idColaborador, c.nombre, c.apellidoPaterno, c.apellidoMaterno, c.numeroLicencia AS noLicencia, c.curp, 
+               c.correo, c.noPersonal, IF(cu.idUnidad IS NOT NULL, true, false) AS asignado
+        FROM 
+            Colaborador c
+        LEFT JOIN 
+            ColaboradorUnidad cu ON cu.idColaborador = c.idColaborador
+        WHERE c.idRol=3;
+    </select>
+
+    <select id="obtenerRegistrosColaboradorUnidad" resultMap="RegistroColaboradorUnidadMap">
+        SELECT 
+            cu.idColaboradorUnidad,
+            c.idColaborador,
+            c.nombre,
+            c.apellidoPaterno,
+            c.apellidoMaterno,
+            c.numeroLicencia,
+            c.curp,
+            c.correo,
+            c.noPersonal,
+            c.idRol,
+            u.idUnidad,
+            u.marca,
+            u.modelo,
+            u.anio,
+            u.vin,
+            u.noIdentificacion,
+            tu.tipo AS tipoUnidad
+        FROM 
+            Unidad u
+        LEFT JOIN 
+            ColaboradorUnidad cu ON cu.idUnidad = u.idUnidad
+        JOIN 
+            Colaborador c ON cu.idColaborador = c.idColaborador
+        JOIN 
+            TipoUnidad tu ON u.idTipoUnidad = tu.idTipoUnidad;
+
+    </select>
+    
+    <resultMap id="RegistroColaboradorUnidadMap" type="pojo.RegistroColaboradorUnidad">
+            <association property="colaborador" javaType="pojo.Colaborador">
+                <id column="idColaborador" property="idColaborador" />
+                <result column="nombre" property="nombre" />
+                <result column="apellidoPaterno" property="apellidoPaterno" />
+                <result column="apellidoMaterno" property="apellidoMaterno" />
+                <result column="numeroLicencia" property="noLicencia" />
+                <result column="curp" property="curp" />
+                <result column="correo" property="correo" />
+                <result column="noPersonal" property="noPersonal" />
+            </association>
+            <association property="unidad" javaType="pojo.Unidad">
+                <id column="idUnidad" property="idUnidad" />
+                <result column="marca" property="marca" />
+                <result column="modelo" property="modelo" />
+                <result column="anio" property="anio" />
+                <result column="vin" property="vin" />
+                <result column="noIdentificacion" property="noIdentificacion" />
+                <result column="tipoUnidad" property="tipoUnidad" />
+            </association>
+        </resultMap>
 </mapper>
 
