@@ -204,7 +204,9 @@ WHERE
 
 <update id="eliminarEnvio" parameterType="int">
     UPDATE envio
-    SET isDeleted = 1
+    SET 
+        isDeleted = 1,
+        idColaborador = 1
     WHERE idEnvio = #{idEnvio}
 </update>
 
