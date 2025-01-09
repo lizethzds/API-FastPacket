@@ -106,7 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <update id="guardarFoto" parameterType="map">
         UPDATE colaborador
-        SET fotografia =  TO_BASE64(#{fotografia})
+        SET fotografia =  #{fotografia}
         where idColaborador = #{idColaborador};
     </update>
     

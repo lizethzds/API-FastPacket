@@ -1,5 +1,6 @@
 package dominio;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -324,8 +325,9 @@ public class ImpColaboradores {
         if (conexionDB != null) {
             try {
                 HashMap<String, Object> parametros = new LinkedHashMap<>();
+                String base64Foto = bytesToBase64(foto);
                 parametros.put("idColaborador", idCliente);
-                parametros.put("fotografia", foto);
+                parametros.put("fotografia", base64Foto);
                 int filasAfectadas = conexionDB.update("colaborador.guardarFoto", parametros);
                 conexionDB.commit();
                 if (filasAfectadas >= 1) {
@@ -343,6 +345,20 @@ public class ImpColaboradores {
         }
         return respuesta;
     }
+    public static String bytesToBase64(byte[] byteArray) {
+        try {
+            if (byteArray != null && byteArray.length > 0) {
+                return Base64.getEncoder().encodeToString(byteArray);
+            } else {
+                System.err.println("El array de bytes está vacío o es nulo.");
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     public static List<Unidad> obtenerUnidadesPorAsignacion() {
         List<Unidad> unidades = null;
