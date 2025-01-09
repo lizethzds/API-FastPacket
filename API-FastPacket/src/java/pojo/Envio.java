@@ -17,11 +17,12 @@ public class Envio {
     private String cliente;
     private String conductor;
     private String estatus;
+    private String direccion;
 
     public Envio() {
     }
 
-    public Envio(Integer idEnvio, String noGuia, float costoEnvio, Integer idEstadoEnvio, Integer idCliente, Integer idColaborador, Integer idDireccionDestino, String cliente, String conductor, String estatus) {
+    public Envio(Integer idEnvio, String noGuia, float costoEnvio, Integer idEstadoEnvio, Integer idCliente, Integer idColaborador, Integer idDireccionDestino, String cliente, String conductor, String estatus, String direccion) {
         this.idEnvio = idEnvio;
         this.noGuia = noGuia;
         this.costoEnvio = costoEnvio;
@@ -32,9 +33,8 @@ public class Envio {
         this.cliente = cliente;
         this.conductor = conductor;
         this.estatus = estatus;
+        this.direccion = direccion;
     }
-
-   
 
     public Integer getIdEnvio() {
         return idEnvio;
@@ -51,8 +51,6 @@ public class Envio {
     public void setNoGuia(String noGuia) {
         this.noGuia = noGuia;
     }
-
- 
 
     public float getCostoEnvio() {
         return costoEnvio;
@@ -118,11 +116,14 @@ public class Envio {
         this.estatus = estatus;
     }
 
-   
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
     
     
-    
-    
-    
-    
+
 }

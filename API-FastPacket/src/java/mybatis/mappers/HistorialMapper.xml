@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <insert id="guardarCambioEstatus" parameterType="pojo.HistorialEnvio">
     INSERT INTO historialenvio (idColaborador, comentario, idEnvio, idEstadoEnvio)
     VALUES (#{idColaborador}, #{comentario}, #{idEnvio}, #{idEstadoEnvio})
-</insert>
+    </insert>
 
     <select id="obtenerHistorialEnvio" parameterType="int" resultType="pojo.HistorialEnvio">
         SELECT horaModificacion, comentario, e.nombre as estatus

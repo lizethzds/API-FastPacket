@@ -104,14 +104,14 @@ public class ImpCliente {
     SqlSession conexionBD = MyBatisUtil.getSession();
     if(conexionBD!=null){
         try{
-           int filasAfectadas = conexionBD.delete("clientes.eliminar", idCliente);
+           int filasAfectadas = conexionBD.update("clientes.eliminarCliente", idCliente);
             conexionBD.commit();
             
             if(filasAfectadas>0){
                 msj.setError(false);
                 msj.setContenido("El cliente se ha eliminado correctamente del sistema.");
             }else{
-                msj.setContenido("Hubo un error al intentar borrar el registro.");
+                msj.setContenido("El cliente se encuentra actualmente asignado a un envío o más, para poder eliminarlo, borre los envíos existentes.");
             }
             
         }catch(Exception e){

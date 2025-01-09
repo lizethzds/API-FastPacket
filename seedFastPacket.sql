@@ -99,6 +99,12 @@ VALUES
 (2, 2, "Retraso por clima", 2),
 (2, 4, "Paquete cancelado por remitente", 4);
 
+
+INSERT INTO HistorialEnvio (idColaborador, idEnvio, comentario, horaModificacion, fechaModificacion, idEstadoEnvio)
+VALUES 
+(1, 1, 101, current_time, current_date, 1);
+
+select * from HistorialEnvio;
 INSERT INTO Paquete (descripcion, peso, altura, ancho, profundidad, idEnvio)
 VALUES 
 ('Paquete pequeño', 1, 10, 15, 20, 1),

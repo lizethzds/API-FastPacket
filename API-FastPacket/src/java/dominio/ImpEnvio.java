@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dominio;
 
 import java.util.List;
@@ -10,6 +6,7 @@ import mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojo.DatosRegistroEnvio;
 import pojo.Envio;
+import pojo.HistorialEnvio;
 import pojo.Mensaje;
 
 /**
@@ -117,6 +114,38 @@ public class ImpEnvio {
     }
     
     
+    public static Mensaje editarEstatusEnvio(HistorialEnvio envioEstatus){
+    Mensaje msj = new Mensaje();
+    msj.setError(true);
+    SqlSession conexionBD = MyBatisUtil.getSession();
+    if(conexionBD != null){
+            try{
+                int filasAfectadas = conexionBD.update("envios.editarEstatus", envioEstatus);
+                conexionBD.commit();
+                if(filasAfectadas>0){
+                    msj.setError(false);
+                    msj.setContenido("El estatus del envío ha sido actualizado");
+                    Mensaje historial = new Mensaje();
+                    historial = ImpHistorial.guardarRegistroCambios(envioEstatus);
+                }else{
+                msj.setContenido("Ha ocurrido un error al intentar actualizar el estatus del envío");
+                }
+                
+            }catch(Exception e){
+                msj.setContenido("Ocurrió un error al realizar el la acutalización.");
+                e.printStackTrace();
+                
+            }
+        }else{
+            msj.setContenido("No hay conexion con la BD");
+        }
+               
+    return msj;   
+    
+    
+    }
+    
+    
     public static Mensaje eliminarEnvio (Integer idEnvio){
         Mensaje msj = new Mensaje();
         msj.setError(true);
@@ -140,6 +169,15 @@ public class ImpEnvio {
         
         return msj;
     
+    }
+    
+    public static List<Envio> obtenerEnviosPorConductor(int idColaborador){
+        List<Envio> envios = null;
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            envios = conexionBD.selectList("envios.enviosPorConductor", idColaborador);
+        }
+        return  envios;
     }
     
 }

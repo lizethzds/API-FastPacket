@@ -135,12 +135,50 @@ CREATE TABLE Paquete (
   FOREIGN KEY (idEnvio) REFERENCES Envio(idEnvio)
 );
 
+-- Procedimiento almacenado para eliminar colaborador
+
 DELIMITER $$
 
 CREATE PROCEDURE eliminarColaborador(IN colaboradorID INT)
 BEGIN
+    DECLARE envioAsignado INT;
+
+    SELECT COUNT(*) INTO envioAsignado
+    FROM Envio
+    WHERE idColaborador = colaboradorID;
+
+	INSERT INTO HistorialEnvio (
+		idColaborador, idEnvio, comentario, horaModificacion, fechaModificacion, idEstadoEnvio
+	)
+    SELECT colaboradorID, idEnvio, 
+		'El colaborador fue despedido en el trayecto, pronto se le asignará otro', 
+		CURRENT_TIMESTAMP, CURDATE(), 2
+	FROM Envio
+	WHERE idColaborador = colaboradorID;
+
+	UPDATE Envio 
+	SET idColaborador = NULL, idEstadoEnvio = 3
+	WHERE idColaborador = colaboradorID;
+
+    DELETE FROM HistorialEnvio WHERE idColaborador = colaboradorID;
+
     DELETE FROM ColaboradorUnidad WHERE idColaborador = colaboradorID;
+
     DELETE FROM Colaborador WHERE idColaborador = colaboradorID;
 END$$
+
+DELIMITER ;
+
+
+
+-- Triggers para elimnacion de direccion asociada a un cliente
+DELIMITER //
+
+CREATE TRIGGER eliminar_direccion_cliente
+AFTER DELETE ON cliente
+FOR EACH ROW
+BEGIN
+    DELETE FROM direccion WHERE idDireccion = OLD.idDireccion;
+END //
 
 DELIMITER ;
